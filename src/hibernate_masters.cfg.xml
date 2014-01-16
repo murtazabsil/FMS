@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory name="">
+		<!-- <property name="hibernate.connection.datasource">java:comp/env/jdbc/masterdb</property> -->
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/fms</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.connection.password">root123098</property>
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
+		<property name="hibernate.current_session_context_class">thread</property>
+		<property name="hibernate.connection.release_mode">auto</property>
+		<property name="hibernate.connection.useUnicode">true</property>
+		<property name="hibernate.connection.characterEncoding">UTF-8</property>
+		<property name="show_sql">true</property> 
+		<!-- Start: Connection and pooling configuration <property name="connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property> 
+			<property name="connection.autoReconnect">true</property> <property name="connection.autoReconnectForPool">true</property> -->
+		<property name="c3p0.initialPoolSize">5</property>
+		<property name="hibernate.c3p0.acquire_increment">4</property>
+		<property name="hibernate.c3p0.acquireRetryAttempts">10</property>
+		<property name="hibernate.c3p0.idle_test_period">3600</property>
+		<property name="hibernate.c3p0.min_size">2</property>
+		<property name="hibernate.c3p0.max_size">80</property>
+		<property name="hibernate.c3p0.max_statements">0</property>
+		<property name="hibernate.c3p0.maxConnectionAge">14400</property>
+		<property name="hibernate.c3p0.timeout">100</property>
+		<property name="hibernate.c3p0.validate">true</property>
+		<property name="hibernate.c3p0.preferredTestQuery">SELECT 1;</property>
+		<property name="cache.use_query_cache">false</property>
+		<property name="cache.use_second_level_cache">false</property>
+		<!-- End: Caching configuration Mapping files 
+		<mapping package="com.ota.master.entity" /> -->
+		<mapping class="com.bluestar.fms.entity.Lob" />
+		<mapping class="com.bluestar.fms.entity.Account" />
+		<mapping class="com.bluestar.fms.entity.City" />
+		<mapping class="com.bluestar.fms.entity.Country" />
+		<mapping class="com.bluestar.fms.entity.Currency" />
+		<mapping class="com.bluestar.fms.entity.Department" />
+		<mapping class="com.bluestar.fms.entity.Login" />
+		<mapping class="com.bluestar.fms.entity.Manager" />
+		<mapping class="com.bluestar.fms.entity.Module" />
+		<mapping class="com.bluestar.fms.entity.Priority" />
+		<mapping class="com.bluestar.fms.entity.Project" />
+		<mapping class="com.bluestar.fms.entity.Status" />
+		<mapping class="com.bluestar.fms.entity.Type" />
+		<mapping class="com.bluestar.fms.entity.User" />
+		<mapping class="com.bluestar.fms.entity.Location" />
+		<mapping class="com.bluestar.fms.entity.UserType" />
+		<mapping class="com.bluestar.fms.entity.MenuUserType" />
+		
+			</session-factory>
+</hibernate-configuration>
