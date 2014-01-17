@@ -223,7 +223,7 @@
 						face='verdana'>Project Description </TD>
 					<TD colspan=2 align=left><textarea name='projectDesc'
 							ROWS="5
-							COLS=" 50" value="" style="width: 360px;"></textarea></TD>
+							COLS=" 50" value=""></textarea></TD>
 
 				</tr>
 

@@ -28,7 +28,7 @@
 			<h2>Project List</h2>
 		</div>
 
-		<div>
+		<div id="add-button">
 			<a href="AddProject.jsp"> <span
 				style="background-color: #565656; padding: 7px; color: white;">Add
 					New Project</span>
