@@ -9,6 +9,8 @@
 	src="<%=request.getContextPath()%>/scripts/jquery-1.9.1.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/scripts/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/css/dataTables.css">
 <LINK href="<%=request.getContextPath()%>/css/styles.css"
 	type="text/css" rel="stylesheet">
 <LINK href="<%=request.getContextPath()%>/css/bootstrap.min.css"
@@ -25,8 +27,6 @@
 </style>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/scripts/menu.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="<%=request.getContextPath()%>/css/dataTables.css">
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/scripts/module.js"></script>
 <script type="text/javascript"
@@ -45,49 +45,49 @@
 				<a class="navbar-brand" href="#">FMS</a>
 			</div>
 			<nav class="bs-navbar-collapse" role="navigation">
-					<ul class="nav navbar-nav">
-						<!--Retreiving user id using Session-->
+				<ul class="nav navbar-nav">
+					<!--Retreiving user id using Session-->
 
-						<%
-							String Userid = (String) session.getAttribute("UserID");
-						%>
+					<%
+						String Userid = (String) session.getAttribute("UserID");
+					%>
 
-						<%
-							Map<String, String> menuAccess = (Map) session
-									.getAttribute("menuAccess");
-							Iterator iterator = menuAccess.entrySet().iterator();
-							String referer = request.getRequestURL().toString();
-							boolean testJspAlreadyPresent = false;
-							if (referer.indexOf("/jsp") != -1) {
-								testJspAlreadyPresent = true;
-							}
-							if (request.getParameter("UserID") != null) {
-								testJspAlreadyPresent = false;
-							}
-							String newPage = null;
-							boolean addJspInLogout = true;
-							/* out.print("<div id='main-menu'>"); */
-							while (iterator.hasNext()) {
-								Map.Entry currentMenu = (Map.Entry) iterator.next();
-								if (testJspAlreadyPresent
-										&& request.getAttribute("Path") == null) {
-									newPage = (String) currentMenu.getValue();
-									addJspInLogout = false;
-								} else {
-									newPage = "jsp/" + currentMenu.getValue();
-								}
-								out.print("<li><A HREF='" + newPage + "'>"
-										+ currentMenu.getKey() + "</A></li>");
-							}
-							if (addJspInLogout) {
-								out.print("<li><A HREF='jsp/Logout.jsp' >Logout</A></li>");
+					<%
+						Map<String, String> menuAccess = (Map) session
+								.getAttribute("menuAccess");
+						Iterator iterator = menuAccess.entrySet().iterator();
+						String referer = request.getRequestURL().toString();
+						boolean testJspAlreadyPresent = false;
+						if (referer.indexOf("/jsp") != -1) {
+							testJspAlreadyPresent = true;
+						}
+						if (request.getParameter("UserID") != null) {
+							testJspAlreadyPresent = false;
+						}
+						String newPage = null;
+						boolean addJspInLogout = true;
+						/* out.print("<div id='main-menu'>"); */
+						while (iterator.hasNext()) {
+							Map.Entry currentMenu = (Map.Entry) iterator.next();
+							if (testJspAlreadyPresent
+									&& request.getAttribute("Path") == null) {
+								newPage = (String) currentMenu.getValue();
+								addJspInLogout = false;
 							} else {
-								out.print("<li><A HREF='Logout.jsp' >Logout</A></li>");
+								newPage = "jsp/" + currentMenu.getValue();
 							}
-						%>
-					</ul>
-				</div>
-			</nav>
+							out.print("<li><A HREF='" + newPage + "'>"
+									+ currentMenu.getKey() + "</A></li>");
+						}
+						if (addJspInLogout) {
+							out.print("<li><A HREF='jsp/Logout.jsp' >Logout</A></li>");
+						} else {
+							out.print("<li><A HREF='Logout.jsp' >Logout</A></li>");
+						}
+					%>
+				</ul>
+		</div>
+		</nav>
 		</div>
 	</header>
 </body>

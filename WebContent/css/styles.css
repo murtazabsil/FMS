@@ -8,7 +8,7 @@ TEXTAREA {
 	FONT-WEIGHT: normal;
 	FONT-SIZE: 8pt;
 	FONT-FAMILY: Verdana, Arial, helvetica,
-		sans-serif BACKGROUND-COLOR :          #D3D3D3;
+		sans-serif BACKGROUND-COLOR :                #D3D3D3;
 	COLOR: #000000
 }
 
@@ -68,7 +68,7 @@ TABLE.notepad {
 	BORDER-TOP: #8B0000 2px outset;
 	BORDER-LEFT: #8B0000 2px outset;
 	BORDER-BOTTOM: #8B0000 2px outset;
-	COLOR: #330000 FONT-FAMILY:          Verdana, Arial, helvetica,
+	COLOR: #330000 FONT-FAMILY:                Verdana, Arial, helvetica,
 		sans-serif
 }
 
@@ -97,7 +97,7 @@ A {
 }
 
 .transparent {
-	filter: alpha(opacity =         100);
+	filter: alpha(opacity =               100);
 	background-color: #FFFFDD;
 	display: none;
 	/*width:170;
@@ -318,9 +318,15 @@ H1,H3,H4,H5 {
 #add-button {
 	margin-bottom: 2%;
 	margin-left: 10%;
-	margin-top: 4%;
+	margin-top: 2%;
 	position: absolute;
 	z-index: 1000;
+}
+
+#list-note {
+	clear: both;
+	margin-left: 10%;
+	margin-top: 6%;
 }
 
 .table-responsive {
@@ -333,11 +339,22 @@ H1,H3,H4,H5 {
 	}
 	.dataTables_filter {
 		width: 42%;
+		margin-right: 56%;
 	}
 	#project {
 		margin-left: 15%;
 	}
 	#project textarea {
-		width : 75%;
+		width: 75%;
+	}
+	#list-note {
+		margin-left: 0%;
+	}
+	#add-button {
+		margin-left: 60%;
+		margin-top: 7%;
+	}
+	.dataTables_info {
+		margin-left: 32%;
 	}
 }

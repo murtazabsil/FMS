@@ -67,7 +67,7 @@
 		</div>
 	</div>
 
-	<div style="clear: both; margin-left: 55px; margin-top: 120px;">
+	<div id="list-note">
 		<span style="color: red;">Note:</span> <span
 			style="font-weight: normal;"> Please keep mouse over Project
 			Name to get description.</span>
