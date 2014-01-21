@@ -57,7 +57,6 @@ public class BrowserType implements Filter {
 			HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 			userAgent = httpServletRequest.getHeader("user-agent");
 			redirectedPage = (String) httpServletRequest.getAttribute("Path");
-			System.out.println(httpServletRequest.getRequestURL().toString());
 			if(httpServletRequest.getRequestURL().toString().equalsIgnoreCase("Home")){
 				redirectedPage = "Home";
 			}

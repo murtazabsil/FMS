@@ -18,21 +18,20 @@
 	<%
 		AuthorizeVO authorizeVO = (AuthorizeVO) request
 				.getAttribute("authorize");
-		String userId = authorizeVO.getLoginVO().getUserID();
-
-		String auth = authorizeVO.getLoginVO().getAuth();
-		memberType = authorizeVO.getUserVO().getUserType();
 		Integer result = authorizeVO.getResult();
-		Integer appStr = authorizeVO.getUserVO().getApprove();
-
-		int flag = 0;
 		if (result > 0) {
+			String userId = authorizeVO.getLoginVO().getUserID();
+
+			String auth = authorizeVO.getLoginVO().getAuth();
+			memberType = authorizeVO.getUserVO().getUserType();
+
+			Integer appStr = authorizeVO.getUserVO().getApprove();
+
 			System.out.println("auth 1" + auth);
 			session.setAttribute("userId", userId);
 			session.setAttribute("auth", new Integer(auth));
 			System.out.println("auth 2" + auth);
-			flag = 1;
-			if (auth != null && auth.equals("2")) {
+			if (auth != null && auth.equals("3")) {
 
 				if (memberType != null && memberType == 2) {
 					System.out.println("auth" + auth);
@@ -60,14 +59,18 @@
 	%>
 	<jsp:forward page="AdminMenu.jsp" />
 	<%
-		}
+		} else if (auth.equals("2")) {
+				//Show Admin Menu
+	%>
+	<jsp:forward page="AdminMenu.jsp" />
+	<%
 		} else {
-			flag = 0;
 	%>
 	<jsp:forward page="Login.jsp">
 		<jsp:param name="ErrCode" value="1" />
 	</jsp:forward>
 	<%
+		}
 		}
 	%>
 </BODY>
