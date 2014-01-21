@@ -21,8 +21,6 @@
 	src="<%=request.getContextPath()%>/scripts/module.js"></script>
 </head>
 <body>
-
-
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
 	<%
 		AdminBSO adminBSO = new AdminBSOImpl();
