@@ -49,6 +49,9 @@
 		<mapping class="com.bluestar.fms.entity.Location" />
 		<mapping class="com.bluestar.fms.entity.UserType" />
 		<mapping class="com.bluestar.fms.entity.MenuUserType" />
-		
+		<mapping class="com.bluestar.fms.entity.ProjectManagerLink" />
+		<mapping class="com.bluestar.fms.entity.Forecast" />
+		<mapping class="com.bluestar.fms.entity.ForecastDetail" />
+		<mapping class="com.bluestar.fms.entity.Month" />
 			</session-factory>
 </hibernate-configuration>

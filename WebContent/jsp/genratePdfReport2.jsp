@@ -1,7 +1,7 @@
 
 <%@ page language="java" %>
 <%@ page session="true" %>
-<%@ page import="java.util.List,com.itextpdf.text.pdf.PdfPCell,com.itextpdf.text.pdf.PdfPTable,java.sql.*,com.itextpdf.text.*,com.itextpdf.text.pdf.PdfWriter,java.io.*,java.util.*,java.util.Random,com.eResorts.MemberReviewsVO,com.eResorts.ReportBean,com.eResorts.GeneratePdfFile,com.eResorts.HeaderAndFooter,com.eResorts.PDFServletBean"%>
+<%@ page import="java.util.List,com.itextpdf.text.pdf.PdfPCell,com.itextpdf.text.pdf.PdfPTable,java.sql.*,com.itextpdf.text.*,com.itextpdf.text.pdf.PdfWriter,java.io.*,java.util.*,java.util.Random,com.eResorts.MemberReviewsVO,com.eResorts.ReportBean,com.eResorts.GeneratePdfFile,com.eResorts.HeaderAndFooter"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <HEAD>
 
@@ -21,7 +21,7 @@ ReportBean reportBean = (ReportBean)session.getAttribute("reportBean");
 	try
 	{
 		//PDFServlet pdfServlet = new PDFServlet();
-		baosPDF = PDFServletBean.generatePDFDocumentBytes(request,config.getServletContext(),memberReviewsVO);
+		//baosPDF = PDFServletBean.generatePDFDocumentBytes(request,config.getServletContext(),memberReviewsVO);
 		
 		StringBuffer sbFilename = new StringBuffer();
 		sbFilename.append("filename_");

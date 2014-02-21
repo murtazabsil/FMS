@@ -333,6 +333,10 @@ H1,H3,H4,H5 {
 	border: !important none;
 }
 
+#project-list-table thead th{
+	text-align: center;
+}
+
 @MEDIA screen and (max-width: 600px) {
 	.dataTables_paginate {
 		margin-bottom: 2%;
@@ -357,4 +361,12 @@ H1,H3,H4,H5 {
 	.dataTables_info {
 		margin-left: 32%;
 	}
+}
+
+#form-wrapper td{
+	width: 40%;
+}
+
+#form-wrapper tr{
+	height: 2%;
 }

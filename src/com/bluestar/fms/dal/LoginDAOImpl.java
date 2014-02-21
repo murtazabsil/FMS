@@ -65,7 +65,7 @@ public class LoginDAOImpl implements LoginDAO {
 					userVO = new UserVO();
 					userVO.setUserType(rs.getInt(9));
 					userVO.setApprove(1);
-
+					userVO.setRegID(id);
 				}
 				authorizeVO.setUserVO(userVO);
 

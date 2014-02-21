@@ -35,6 +35,8 @@ public class LoginServlet extends HttpServlet{
 			AuthorizeVO authorizeVO = loginBSO.validateUser(request);		
 			request.setAttribute("authorize", authorizeVO);
 			request.getSession().setAttribute("menuAccess", authorizeVO.getMenuAccess());
+			request.getSession().setAttribute("userRegId", authorizeVO.getUserVO().getRegID());
+			request.getSession().setAttribute("userType", authorizeVO.getUserVO().getUserType());
 			request.setAttribute("Path","Validate");
 		}catch(Exception e){
 			e.printStackTrace();

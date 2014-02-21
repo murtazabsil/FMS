@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Forecast.findAll", query = "SELECT f FROM Forecast f"),
     @NamedQuery(name = "Forecast.findByForecastId", query = "SELECT f FROM Forecast f WHERE f.forecastId = :forecastId"),
     @NamedQuery(name = "Forecast.findByForecastName", query = "SELECT f FROM Forecast f WHERE f.forecastName = :forecastName"),
-    @NamedQuery(name = "Forecast.findByForecastTypeId", query = "SELECT f FROM Forecast f WHERE f.forecastTypeId = :forecastTypeId"),
     @NamedQuery(name = "Forecast.findByForecastYear", query = "SELECT f FROM Forecast f WHERE f.forecastYear = :forecastYear"),
+    @NamedQuery(name = "Forecast.findByForecastMonth", query = "SELECT f FROM Forecast f WHERE f.forecastMonth = :forecastMonth"),
     @NamedQuery(name = "Forecast.findByProjectId", query = "SELECT f FROM Forecast f WHERE f.projectId = :projectId"),
     @NamedQuery(name = "Forecast.findByCreatedBy", query = "SELECT f FROM Forecast f WHERE f.createdBy = :createdBy"),
     @NamedQuery(name = "Forecast.findByCreatedOn", query = "SELECT f FROM Forecast f WHERE f.createdOn = :createdOn")})
@@ -56,12 +56,12 @@ public class Forecast implements Serializable {
     private String forecastName;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "forecast_type_id")
-    private long forecastTypeId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "forecast_year")
     private int forecastYear;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "forecast_month")
+    private int forecastMonth;
     @Basic(optional = false)
     @NotNull
     @Column(name = "project_id")
@@ -85,11 +85,11 @@ public class Forecast implements Serializable {
         this.forecastId = forecastId;
     }
 
-    public Forecast(Long forecastId, String forecastName, long forecastTypeId, int forecastYear, long projectId, long createdBy, Date createdOn) {
+    public Forecast(Long forecastId, String forecastName, int forecastYear, int forecastMonth, long projectId, long createdBy, Date createdOn) {
         this.forecastId = forecastId;
         this.forecastName = forecastName;
-        this.forecastTypeId = forecastTypeId;
         this.forecastYear = forecastYear;
+        this.forecastMonth = forecastMonth;
         this.projectId = projectId;
         this.createdBy = createdBy;
         this.createdOn = createdOn;
@@ -111,14 +111,6 @@ public class Forecast implements Serializable {
         this.forecastName = forecastName;
     }
 
-    public long getForecastTypeId() {
-        return forecastTypeId;
-    }
-
-    public void setForecastTypeId(long forecastTypeId) {
-        this.forecastTypeId = forecastTypeId;
-    }
-
     public int getForecastYear() {
         return forecastYear;
     }
@@ -127,7 +119,15 @@ public class Forecast implements Serializable {
         this.forecastYear = forecastYear;
     }
 
-    public long getProjectId() {
+    public int getForecastMonth() {
+		return forecastMonth;
+	}
+
+	public void setForecastMonth(int forecastMonth) {
+		this.forecastMonth = forecastMonth;
+	}
+
+	public long getProjectId() {
         return projectId;
     }
 

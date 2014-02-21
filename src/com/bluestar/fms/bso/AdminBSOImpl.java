@@ -241,4 +241,10 @@ public class AdminBSOImpl implements AdminBSO {
 		return null;
 	}
 
+	@Override
+	public List<ProjectVO> getProjectList(Long userType, Long userId) {
+		List<ProjectVO> listProjectVO = adminDAOImpl.getProjectList(userType,userId);
+		return listProjectVO;
+	}
+
 }

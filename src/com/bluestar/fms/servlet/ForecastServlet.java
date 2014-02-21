@@ -7,7 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.bluestar.fms.bso.ForecastBSO;
+import com.bluestar.fms.bso.ForecastBSOImpl;
+import com.bluestar.fms.entity.Forecast;
+import com.bluestar.fms.util.ForecastUtil;
 import com.bluestar.fms.util.PrintStackTraceLogger;
+import com.bluestar.fms.vo.ForecastVO;
 
 /**
  * Servlet implementation class ForecastServlet
@@ -38,11 +43,13 @@ public class ForecastServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		ForecastBSO forecastBSO = null;
 		try {
+			forecastBSO = new ForecastBSOImpl();
 			String requestFrom = request.getParameter("requestFrom");
 			if(requestFrom != null){
 				if(requestFrom.equalsIgnoreCase("AddForecast")){
-					
+					forecastBSO.addForecast(request);
 				}
 			}
 		} catch (Exception exception) {

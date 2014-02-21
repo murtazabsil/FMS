@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,9 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProjectManagerLink.findAll", query = "SELECT p FROM ProjectManagerLink p"),
-    @NamedQuery(name = "ProjectManagerLink.findByProjectManagerLinkId", query = "SELECT p FROM ProjectManagerLink p WHERE p.projectManagerLinkId = :projectManagerLinkId"),
-    @NamedQuery(name = "ProjectManagerLink.findByProjectId", query = "SELECT p FROM ProjectManagerLink p WHERE p.projectId = :projectId"),
-    @NamedQuery(name = "ProjectManagerLink.findByManagerId", query = "SELECT p FROM ProjectManagerLink p WHERE p.managerId = :managerId")})
+    @NamedQuery(name = "ProjectManagerLink.findByProjectManagerLinkId", query = "SELECT p FROM ProjectManagerLink p WHERE p.projectManagerLinkId = :projectManagerLinkId")})
 public class ProjectManagerLink implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,26 +37,18 @@ public class ProjectManagerLink implements Serializable {
     @NotNull
     @Column(name = "project_manager_link_id")
     private Long projectManagerLinkId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "project_id")
-    private long projectId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "manager_id")
-    private long managerId;
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @ManyToOne(optional = false)
+    private Project projectId;
+    @JoinColumn(name = "manager_id", referencedColumnName = "manager_id")
+    @ManyToOne(optional = false)
+    private Manager managerId;
 
     public ProjectManagerLink() {
     }
 
     public ProjectManagerLink(Long projectManagerLinkId) {
         this.projectManagerLinkId = projectManagerLinkId;
-    }
-
-    public ProjectManagerLink(Long projectManagerLinkId, long projectId, long managerId) {
-        this.projectManagerLinkId = projectManagerLinkId;
-        this.projectId = projectId;
-        this.managerId = managerId;
     }
 
     public Long getProjectManagerLinkId() {
@@ -67,19 +59,19 @@ public class ProjectManagerLink implements Serializable {
         this.projectManagerLinkId = projectManagerLinkId;
     }
 
-    public long getProjectId() {
+    public Project getProjectId() {
         return projectId;
     }
 
-    public void setProjectId(long projectId) {
+    public void setProjectId(Project projectId) {
         this.projectId = projectId;
     }
 
-    public long getManagerId() {
+    public Manager getManagerId() {
         return managerId;
     }
 
-    public void setManagerId(long managerId) {
+    public void setManagerId(Manager managerId) {
         this.managerId = managerId;
     }
 

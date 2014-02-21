@@ -22,6 +22,7 @@ public interface AdminDAO {
 
 	public List<ModuleVO> getModuleList();
 	public List<ProjectVO> getProjectList();
+	public List<ProjectVO> getProjectList(Long userType,Long userId);
 	public List<ManagerVO> getManagerList();
 	public List<AccountVO> getAccountList();
 	public List<LobVO> getLobList();

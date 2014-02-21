@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,74 +7,99 @@
 <meta name="viewport" content="width=device-width, user-scalable=no">
 </head>
 <body>
-<div>Add Forecast</div>
-<form action="/ForecastServlet" method="post"></form>
-<input type="hidden" name="requestFrom" value="AddForecast">
-<div>
-<span>Forecast Type :</span>
-<span>
-<select>
-<option>Monthly</option>
-<option>Quarterly</option>
-<option>Yearly</option>
-</select></span>
-</div>
-<div>
-<span>Select Year :</span>
-<span>
-<select>
-<option>2013</option>
-<option>2014</option>
-<option>2015</option>
-</select></span>
-</div>
-<div>
-<table>
-<tr class="quarter-row quarter-row-common">
-<td class="monthly-td">JAN</td>
-<td>FEB</td>
-<td>MAR</td>
-<tr>
-<tr class="quarter-row quarter-row-common">
-<td class="monthly-td"><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<tr>
-<tr></tr>
-<tr class="quarter-row-common">
-<td class="monthly-td">APRIL</td>
-<td>MAY</td>
-<td>JUNE</td>
-<tr>
-<tr class="quarter-row-common">
-<td id="monthly-td"><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<tr>
-<tr></tr>
-<tr class="quarter-row-common">
-<td class="monthly-td">JULY</td>
-<td>AUG</td>
-<td>SEP</td>
-<tr>
-<tr class="quarter-row-common">
-<td id="monthly-td"><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<tr>
-<tr></tr>
-<tr class="quarter-row-common">
-<td class="monthly-td">OCT</td>
-<td>NOV</td>
-<td>DEC</td>
-<tr>
-<tr class="quarter-row-common">
-<td id="monthly-td"><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<td><input type="text" size="10"></td>
-<tr>
-</table>
-</div>
-</table>
+	<jsp:include page="AdminMenu.jsp"></jsp:include>
+	<div id="page-title">
+		<h2>Add Forecast</h2>
+	</div>
+	<div id="form-wrapper">
+		<form action="<%=request.getContextPath()%>/ForecastServlet" method="post">
+			<input type="hidden" name="requestFrom" value="AddForecast">
+			<input type="hidden" name="project-id" value="<%=request.getParameter("projectId")%>">
+			<div>
+				<table align="center">
+					<tr>
+						<td>Forecast Name :</td>
+						<td><input type="text" name="forecast-name" id="forecast-name">
+						</td>
+					</tr>
+					<tr>
+						<td>Select Year :</td>
+						<td><select name="forecast-year" id="forecast-year">
+								<option>2013</option>
+								<option>2014</option>
+								<option>2015</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>ForeCast for Month :</td>
+						<td><select name="forecast-month" id="forecast-month">
+								<option value="1">JANUARY</option>
+								<option value="2">FEBRUARY</option>
+								<option value="3">MARCH</option>
+								<option value="4">APRIL</option>
+								<option value="5">MAY</option>
+								<option value="6">JUNE</option>
+								<option value="7">JULY</option>
+								<option value="8">AUGUST</option>
+								<option value="9">SEPTEMBER</option>
+								<option value="10">OCTOBER</option>
+								<option value="11">NOVEMBER</option>
+								<option value="12">DECEMBER</option>
+						</select></td>
+					</tr>
+					<tr class="quarter-row quarter-row-common">
+						<td>JANUARY</td>
+						<td>FEBRUARY</td>
+						<td>MARCH</td>
+					<tr>
+					<tr class="quarter-row quarter-row-common">
+						<td><input name="1" id="1" type="text" size="10"></td>
+						<td><input name="2" id="2" type="text" size="10"></td>
+						<td><input name="3" id="3" type="text" size="10"></td>
+					<tr>
+					<tr></tr>
+					<tr class="quarter-row-common">
+						<td>APRIL</td>
+						<td>MAY</td>
+						<td>JUNE</td>
+					<tr>
+					<tr class="quarter-row-common">
+						<td><input name="4" id="4" type="text" size="10"></td>
+						<td><input name="5" id="5" type="text" size="10"></td>
+						<td><input name="6" id="6" type="text" size="10"></td>
+					<tr>
+					<tr></tr>
+					<tr class="quarter-row-common">
+						<td>JULY</td>
+						<td>AUGUST</td>
+						<td>SEPTEMBER</td>
+					<tr>
+					<tr class="quarter-row-common">
+						<td><input name="7" id="7" type="text" size="10"></td>
+						<td><input name="8" id="8" type="text" size="10"></td>
+						<td><input name="9" id="9" type="text" size="10"></td>
+					<tr>
+					<tr></tr>
+					<tr class="quarter-row-common">
+						<td>OCTOBER</td>
+						<td>NOVEMBER</td>
+						<td>DECEMBER</td>
+					<tr>
+					<tr class="quarter-row-common">
+						<td id="monthly-td"><input name="10" id="10" type="text"
+							size="10"></td>
+						<td><input name="11" id="11" type="text" size="10"></td>
+						<td><input name="12" id="12" type="text" size="10"></td>
+					<tr>
+				</table>
+			</div>
+			<div>
+				<input class="sitewide-button" id="forecast-submit" type="submit"
+					value="Submit" /> <input class="sitewide-button"
+					id="forecast-reset" type="reset" value="Reset" />
+			</div>
+		</form>
+	</div>
+	<jsp:include page="Footer.html"></jsp:include>
 </body>
 </html>

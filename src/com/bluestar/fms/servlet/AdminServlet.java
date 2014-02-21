@@ -68,7 +68,6 @@ public class AdminServlet extends HttpServlet {
 		request.setAttribute("id", id);
 		RequestDispatcher view = null;
 		try {
-
 			if (addmodule != null && addmodule.trim().length() > 0) {
 				responseVO = adminBSO.processAddModule(request);
 				request.setAttribute("response", responseVO);
@@ -267,6 +266,7 @@ public class AdminServlet extends HttpServlet {
 		try{
 			session = ConnectionManager.getSession(ConfigReader.getMastersConfig());
 			daoManager = new DAOManager(session);
+			Map<String, String[]> map = request.getParameterMap();
 			transaction = session.beginTransaction();
 			String action = request.getParameter("action");
 			String module = request.getParameter("module");
