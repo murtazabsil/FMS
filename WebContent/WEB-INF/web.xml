@@ -47,4 +47,14 @@
     <servlet-name>ForecastServlet</servlet-name>
     <url-pattern>/ForecastServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ActualsServlet</display-name>
+    <servlet-name>ActualsServlet</servlet-name>
+    <servlet-class>com.bluestar.fms.servlet.ActualsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActualsServlet</servlet-name>
+    <url-pattern>/ActualsServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

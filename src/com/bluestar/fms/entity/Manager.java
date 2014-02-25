@@ -70,6 +70,8 @@ public class Manager implements Serializable {
     @JoinColumn(name = "manager_currency", referencedColumnName = "currency_id")
     @ManyToOne
     private Currency managerCurrency;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private Collection<Forecast> forecastCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "managerId")
     private Collection<ProjectManagerLink> projectManagerLinkCollection;
 
@@ -150,6 +152,15 @@ public class Manager implements Serializable {
 
     public void setManagerCurrency(Currency managerCurrency) {
         this.managerCurrency = managerCurrency;
+    }
+
+    @XmlTransient
+    public Collection<Forecast> getForecastCollection() {
+        return forecastCollection;
+    }
+
+    public void setForecastCollection(Collection<Forecast> forecastCollection) {
+        this.forecastCollection = forecastCollection;
     }
 
     @XmlTransient

@@ -62,6 +62,8 @@ public class Project implements Serializable {
     @Column(name = "project_desc")
     private String projectDesc;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
+    private Collection<Forecast> forecastCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
     private Collection<ProjectManagerLink> projectManagerLinkCollection;
     @JoinColumn(name = "project_type", referencedColumnName = "type_id")
     @ManyToOne
@@ -127,6 +129,15 @@ public class Project implements Serializable {
 
     public void setProjectDesc(String projectDesc) {
         this.projectDesc = projectDesc;
+    }
+
+    @XmlTransient
+    public Collection<Forecast> getForecastCollection() {
+        return forecastCollection;
+    }
+
+    public void setForecastCollection(Collection<Forecast> forecastCollection) {
+        this.forecastCollection = forecastCollection;
     }
 
     @XmlTransient

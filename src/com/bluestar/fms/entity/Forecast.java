@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -37,9 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Forecast.findByForecastId", query = "SELECT f FROM Forecast f WHERE f.forecastId = :forecastId"),
     @NamedQuery(name = "Forecast.findByForecastName", query = "SELECT f FROM Forecast f WHERE f.forecastName = :forecastName"),
     @NamedQuery(name = "Forecast.findByForecastYear", query = "SELECT f FROM Forecast f WHERE f.forecastYear = :forecastYear"),
-    @NamedQuery(name = "Forecast.findByForecastMonth", query = "SELECT f FROM Forecast f WHERE f.forecastMonth = :forecastMonth"),
-    @NamedQuery(name = "Forecast.findByProjectId", query = "SELECT f FROM Forecast f WHERE f.projectId = :projectId"),
-    @NamedQuery(name = "Forecast.findByCreatedBy", query = "SELECT f FROM Forecast f WHERE f.createdBy = :createdBy"),
     @NamedQuery(name = "Forecast.findByCreatedOn", query = "SELECT f FROM Forecast f WHERE f.createdOn = :createdOn")})
 public class Forecast implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -60,23 +59,20 @@ public class Forecast implements Serializable {
     private int forecastYear;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "forecast_month")
-    private int forecastMonth;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "project_id")
-    private long projectId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "created_by")
-    private long createdBy;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastId")
     private Collection<ForecastDetail> forecastDetailCollection;
+    @JoinColumn(name = "forecast_month", referencedColumnName = "month_id")
+    @ManyToOne(optional = false)
+    private Month forecastMonth;
+    @JoinColumn(name = "created_by", referencedColumnName = "manager_id")
+    @ManyToOne(optional = false)
+    private Manager createdBy;
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @ManyToOne(optional = false)
+    private Project projectId;
 
     public Forecast() {
     }
@@ -85,13 +81,10 @@ public class Forecast implements Serializable {
         this.forecastId = forecastId;
     }
 
-    public Forecast(Long forecastId, String forecastName, int forecastYear, int forecastMonth, long projectId, long createdBy, Date createdOn) {
+    public Forecast(Long forecastId, String forecastName, int forecastYear, Date createdOn) {
         this.forecastId = forecastId;
         this.forecastName = forecastName;
         this.forecastYear = forecastYear;
-        this.forecastMonth = forecastMonth;
-        this.projectId = projectId;
-        this.createdBy = createdBy;
         this.createdOn = createdOn;
     }
 
@@ -119,30 +112,6 @@ public class Forecast implements Serializable {
         this.forecastYear = forecastYear;
     }
 
-    public int getForecastMonth() {
-		return forecastMonth;
-	}
-
-	public void setForecastMonth(int forecastMonth) {
-		this.forecastMonth = forecastMonth;
-	}
-
-	public long getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(long projectId) {
-        this.projectId = projectId;
-    }
-
-    public long getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(long createdBy) {
-        this.createdBy = createdBy;
-    }
-
     public Date getCreatedOn() {
         return createdOn;
     }
@@ -158,6 +127,30 @@ public class Forecast implements Serializable {
 
     public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
         this.forecastDetailCollection = forecastDetailCollection;
+    }
+
+    public Month getForecastMonth() {
+        return forecastMonth;
+    }
+
+    public void setForecastMonth(Month forecastMonth) {
+        this.forecastMonth = forecastMonth;
+    }
+
+    public Manager getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Manager createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
     }
 
     @Override

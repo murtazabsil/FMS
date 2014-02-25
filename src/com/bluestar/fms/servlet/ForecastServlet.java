@@ -1,6 +1,7 @@
 package com.bluestar.fms.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,20 @@ public class ForecastServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		ForecastBSO forecastBSO = null;
+		try{
+			forecastBSO = new ForecastBSOImpl();
+			String requestFrom = request.getParameter("requestFrom");
+			if(requestFrom != null){
+				if(requestFrom.equalsIgnoreCase("ForecastList")){
+					List<ForecastVO> forecastVOs = forecastBSO.getForecastList(request);
+					request.setAttribute("forecastList", forecastVOs);
+					request.setAttribute("Path", "ForecastList");
+				}
+			}
+		}catch(Exception exception){
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
 	}
 
 	/**
@@ -50,6 +65,9 @@ public class ForecastServlet extends HttpServlet {
 			if(requestFrom != null){
 				if(requestFrom.equalsIgnoreCase("AddForecast")){
 					forecastBSO.addForecast(request);
+					List<ForecastVO> forecastVOs = forecastBSO.getForecastList(request);
+					request.setAttribute("forecastList", forecastVOs);
+					request.setAttribute("Path", "ForecastList");
 				}
 			}
 		} catch (Exception exception) {

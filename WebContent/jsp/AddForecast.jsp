@@ -14,7 +14,7 @@
 	<div id="form-wrapper">
 		<form action="<%=request.getContextPath()%>/ForecastServlet" method="post">
 			<input type="hidden" name="requestFrom" value="AddForecast">
-			<input type="hidden" name="project-id" value="<%=request.getParameter("projectId")%>">
+			<input type="hidden" name="projectId" value="<%=request.getParameter("projectId")%>">
 			<div>
 				<table align="center">
 					<tr>
