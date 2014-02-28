@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findByRegid", query = "SELECT u FROM User u WHERE u.regid = :regid"),
     @NamedQuery(name = "User.findByUserid", query = "SELECT u FROM User u WHERE u.userid = :userid"),
+    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
     @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
     @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName"),
     @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address"),
@@ -48,9 +48,16 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "regid")
     private Long regid;
-    @Size(max = 64)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 64)
     @Column(name = "userid")
     private String userid;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Column(name = "password")
+    private String password;
     @Size(max = 100)
     @Column(name = "FirstName")
     private String firstName;
@@ -74,15 +81,18 @@ public class User implements Serializable {
     @JoinColumn(name = "user_type", referencedColumnName = "user_type_id")
     @ManyToOne
     private UserType userType;
-    @JoinColumn(name = "regid", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Login login;
 
     public User() {
     }
 
     public User(Long regid) {
         this.regid = regid;
+    }
+
+    public User(Long regid, String userid, String password) {
+        this.regid = regid;
+        this.userid = userid;
+        this.password = password;
     }
 
     public Long getRegid() {
@@ -99,6 +109,14 @@ public class User implements Serializable {
 
     public void setUserid(String userid) {
         this.userid = userid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -163,14 +181,6 @@ public class User implements Serializable {
 
     public void setUserType(UserType userType) {
         this.userType = userType;
-    }
-
-    public Login getLogin() {
-        return login;
-    }
-
-    public void setLogin(Login login) {
-        this.login = login;
     }
 
     @Override

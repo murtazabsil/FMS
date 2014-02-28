@@ -46,10 +46,10 @@ public class Month implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "month_name")
     private String monthName;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthId")
-    private Collection<ForecastDetail> forecastDetailCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastMonth")
     private Collection<Forecast> forecastCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "monthId")
+    private Collection<ForecastDetail> forecastDetailCollection;
 
     public Month() {
     }
@@ -80,21 +80,21 @@ public class Month implements Serializable {
     }
 
     @XmlTransient
-    public Collection<ForecastDetail> getForecastDetailCollection() {
-        return forecastDetailCollection;
-    }
-
-    public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
-        this.forecastDetailCollection = forecastDetailCollection;
-    }
-
-    @XmlTransient
     public Collection<Forecast> getForecastCollection() {
         return forecastCollection;
     }
 
     public void setForecastCollection(Collection<Forecast> forecastCollection) {
         this.forecastCollection = forecastCollection;
+    }
+
+    @XmlTransient
+    public Collection<ForecastDetail> getForecastDetailCollection() {
+        return forecastDetailCollection;
+    }
+
+    public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
+        this.forecastDetailCollection = forecastDetailCollection;
     }
 
     @Override

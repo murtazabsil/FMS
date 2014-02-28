@@ -20,10 +20,10 @@
 				.getAttribute("authorize");
 		Integer result = authorizeVO.getResult();
 		if (result > 0) {
-			String userId = authorizeVO.getLoginVO().getUserID();
+			String userId = authorizeVO.getUserVO().getRegID().toString();
 
-			String auth = authorizeVO.getLoginVO().getAuth();
-			memberType = authorizeVO.getUserVO().getUserType();
+			String auth = authorizeVO.getUserVO().getUserType().toString();
+			memberType = authorizeVO.getUserVO().getUserType().intValue();
 
 			Integer appStr = authorizeVO.getUserVO().getApprove();
 

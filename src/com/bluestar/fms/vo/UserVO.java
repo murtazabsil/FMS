@@ -17,7 +17,7 @@ public class UserVO implements Serializable {
    
     private Long regID;
     
-    private Long loginID;
+    private String password;
     
     private String userName;
     
@@ -26,7 +26,7 @@ public class UserVO implements Serializable {
     private String lastName;
     
     private String empId;
-  
+    
     private Integer designation;
    
     private String emailAddress;
@@ -35,13 +35,11 @@ public class UserVO implements Serializable {
     
     private String contactNumber;
   
-    private Integer userType;
+    private Long userType;
     
     private String userTypeName;
     
     private Integer approve;
-    
-    private LoginVO loginVO;
     
 	public String getUserTypeName() {
 		return userTypeName;
@@ -51,20 +49,12 @@ public class UserVO implements Serializable {
 		this.userTypeName = userTypeName;
 	}
 
-	public Long getLoginID() {
-		return loginID;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLoginID(Long loginID) {
-		this.loginID = loginID;
-	}
-
-	public LoginVO getLoginVO() {
-		return loginVO;
-	}
-
-	public void setLoginVO(LoginVO loginVO) {
-		this.loginVO = loginVO;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Integer getApprove() {
@@ -147,11 +137,11 @@ public class UserVO implements Serializable {
 		this.contactNumber = contactNumber;
 	}
 
-	public Integer getUserType() {
+	public Long getUserType() {
 		return userType;
 	}
 
-	public void setUserType(Integer userType) {
+	public void setUserType(Long userType) {
 		this.userType = userType;
 	}
    

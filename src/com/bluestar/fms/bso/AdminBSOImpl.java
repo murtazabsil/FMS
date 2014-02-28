@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bluestar.fms.dal.AdminDAO;
 import com.bluestar.fms.dal.AdminDAOImpl;
 import com.bluestar.fms.helper.AdminHelper;
+import com.bluestar.fms.util.UserType;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.CurrencyVO;
 import com.bluestar.fms.vo.ExchageRateVO;
@@ -56,7 +57,12 @@ public class AdminBSOImpl implements AdminBSO {
 			responseVO = adminDAOImpl.addLob(lobVO);
 		} else if (module != null && module.trim().length() > 0
 				&& module.equals("user")) {
+			Integer userType = new Integer(request.getParameter("userType"));
 			UserVO userVO = AdminHelper.convertRequestToUserVO(request);
+			if (userType == UserType.MANAGER.getUserType()) {
+				ManagerVO managerVO = AdminHelper.getMAnagerVOFromUserVO(userVO);
+				adminDAOImpl.addManagerFromUser(managerVO);
+			}
 			responseVO = adminDAOImpl.addUser(userVO);
 		}
 
@@ -243,7 +249,8 @@ public class AdminBSOImpl implements AdminBSO {
 
 	@Override
 	public List<ProjectVO> getProjectList(Long userType, Long userId) {
-		List<ProjectVO> listProjectVO = adminDAOImpl.getProjectList(userType,userId);
+		List<ProjectVO> listProjectVO = adminDAOImpl.getProjectList(userType,
+				userId);
 		return listProjectVO;
 	}
 

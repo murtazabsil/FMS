@@ -48,8 +48,6 @@ public class UserType implements Serializable {
     @Size(max = 100)
     @Column(name = "user_type_description")
     private String userTypeDescription;
-    @OneToMany(mappedBy = "userType")
-    private Collection<Login> loginCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userTypeId")
     private Collection<MenuUserType> menuUserTypeCollection;
     @OneToMany(mappedBy = "userType")
@@ -84,15 +82,6 @@ public class UserType implements Serializable {
 
     public void setUserTypeDescription(String userTypeDescription) {
         this.userTypeDescription = userTypeDescription;
-    }
-
-    @XmlTransient
-    public Collection<Login> getLoginCollection() {
-        return loginCollection;
-    }
-
-    public void setLoginCollection(Collection<Login> loginCollection) {
-        this.loginCollection = loginCollection;
     }
 
     @XmlTransient

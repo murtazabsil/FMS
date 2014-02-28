@@ -40,6 +40,7 @@ public interface AdminDAO {
 	public ResponseVO addLob(LobVO lobVO);
 	public ResponseVO addAccount(AccountVO accountVO);
 	public ResponseVO addManager(ManagerVO managerVO);
+	public void addManagerFromUser(ManagerVO managerVO);
 	public ProjectVO getProjectDetails(String idToEdit);
 	public AccountVO getAccountDetails(String idToEdit);
 	public LobVO getLobDetails(String idToEdit);

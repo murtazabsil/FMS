@@ -62,8 +62,6 @@ public class Forecast implements Serializable {
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastId")
-    private Collection<ForecastDetail> forecastDetailCollection;
     @JoinColumn(name = "forecast_month", referencedColumnName = "month_id")
     @ManyToOne(optional = false)
     private Month forecastMonth;
@@ -73,6 +71,8 @@ public class Forecast implements Serializable {
     @JoinColumn(name = "project_id", referencedColumnName = "project_id")
     @ManyToOne(optional = false)
     private Project projectId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastId")
+    private Collection<ForecastDetail> forecastDetailCollection;
 
     public Forecast() {
     }
@@ -120,15 +120,6 @@ public class Forecast implements Serializable {
         this.createdOn = createdOn;
     }
 
-    @XmlTransient
-    public Collection<ForecastDetail> getForecastDetailCollection() {
-        return forecastDetailCollection;
-    }
-
-    public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
-        this.forecastDetailCollection = forecastDetailCollection;
-    }
-
     public Month getForecastMonth() {
         return forecastMonth;
     }
@@ -151,6 +142,15 @@ public class Forecast implements Serializable {
 
     public void setProjectId(Project projectId) {
         this.projectId = projectId;
+    }
+
+    @XmlTransient
+    public Collection<ForecastDetail> getForecastDetailCollection() {
+        return forecastDetailCollection;
+    }
+
+    public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
+        this.forecastDetailCollection = forecastDetailCollection;
     }
 
     @Override

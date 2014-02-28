@@ -6,7 +6,6 @@ public class AuthorizeVO {
 	 private static final long serialVersionUID = 1L;
 	
 	private int result;
-	private LoginVO loginVO;
 	private UserVO userVO;
 	private Map<String, String> menuAccess;
 	
@@ -15,12 +14,6 @@ public class AuthorizeVO {
 	}
 	public void setResult(int result) {
 		this.result = result;
-	}
-	public LoginVO getLoginVO() {
-		return loginVO;
-	}
-	public void setLoginVO(LoginVO loginVO) {
-		this.loginVO = loginVO;
 	}
 	public UserVO getUserVO() {
 		return userVO;

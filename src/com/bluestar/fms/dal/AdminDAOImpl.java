@@ -1,10 +1,5 @@
 package com.bluestar.fms.dal;
 
-import java.math.BigInteger;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +11,16 @@ import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Currency;
 import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Location;
-import com.bluestar.fms.entity.Login;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Module;
 import com.bluestar.fms.entity.Priority;
+import com.bluestar.fms.entity.Project;
 import com.bluestar.fms.entity.Status;
 import com.bluestar.fms.entity.Type;
 import com.bluestar.fms.entity.User;
-import com.bluestar.fms.constants.AdminConstants;
-import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.util.AdminUtil;
+import com.bluestar.fms.util.ConfigReader;
+import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.CurrencyVO;
 import com.bluestar.fms.vo.DepartmentVO;
@@ -39,10 +35,7 @@ import com.bluestar.fms.vo.ResponseVO;
 import com.bluestar.fms.vo.StatusVO;
 import com.bluestar.fms.vo.TypeVO;
 import com.bluestar.fms.vo.UserVO;
-import com.bluestar.fms.util.AdminUtil;
-import com.bluestar.fms.util.ConfigReader;
 import com.fms.dao.ConnectionManager;
-import com.fms.dao.DAOConstants;
 import com.fms.dao.DAOCustom;
 import com.fms.dao.DAOManager;
 
@@ -511,26 +504,13 @@ public class AdminDAOImpl implements AdminDAO {
 		ResponseVO responseVO = new ResponseVO();
 		Transaction trn = null;
 		Session session = null;
-		Long insertLoginId = null;
-
 		try {
 			session = ConnectionManager.getSession(ConfigReader
 					.getMastersConfig());
 			DAOManager daoMgr = new DAOManager(session);
 			trn = session.getTransaction();
 			trn.begin();
-			if (userVO.getRegID() == null) {
-				Login loginEntity = AdminUtil.convertLoginVOtoEntity(userVO
-						.getLoginVO());
-
-				daoMgr.create(loginEntity);
-
-				insertLoginId = loginEntity.getId();// stmt.executeUpdate();
-			} else {
-				insertLoginId = userVO.getRegID();
-			}
-			User userEntity = AdminUtil.convertUserVOtoEntity(userVO,
-					insertLoginId);
+			User userEntity = AdminUtil.convertUserVOtoEntity(userVO);
 
 			// userEntity.setRegid(insertLoninId);
 
@@ -991,6 +971,35 @@ public class AdminDAOImpl implements AdminDAO {
 
 		return listProjectVO;
 
+	}
+
+	@Override
+	public void addManagerFromUser(ManagerVO managerVO) {
+		Transaction trn = null;
+		Manager managerEntity = null;
+		try {
+			managerEntity = new Manager();
+			managerEntity.setManagerName(managerVO.getManagerName());
+			managerEntity.setManagerEmpId(managerVO.getManagerEmpId());
+			Session session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			try {
+				DAOManager daoMgr = new DAOManager(session);
+				trn = session.getTransaction();
+				trn.begin();
+				daoMgr.createOrUpdate(managerEntity);
+				trn.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				if (session != null) {
+					if (session.isOpen()) {
+						session.beginTransaction().rollback();
+					}
+				}
+			}
+		} catch (Exception e) {
+			PrintStackTraceLogger.getStackTrace(e);
+		}
 	}
 
 }

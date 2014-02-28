@@ -6,97 +6,68 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import java.util.Map;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import com.bluestar.fms.constants.LoginConstants;
+import com.bluestar.fms.entity.MenuUserType;
+import com.bluestar.fms.entity.User;
+import com.bluestar.fms.entity.UserType;
+import com.bluestar.fms.util.ConfigReader;
+import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.vo.AuthorizeVO;
-import com.bluestar.fms.vo.LoginVO;
 import com.bluestar.fms.vo.UserTypeVO;
 import com.bluestar.fms.vo.UserVO;
+import com.fms.dao.ConnectionManager;
 
 public class LoginDAOImpl implements LoginDAO {
 
-	public AuthorizeVO validateUser(LoginVO loginVO) {
-
+	public AuthorizeVO validateUser(UserVO userVO) {
 		AuthorizeVO authorizeVO = new AuthorizeVO();
-		UserVO userVO = null;
-		Connection con = null;
 		ResultSet rs = null;
-		PreparedStatement stmt = null;
 		Map<String, String> menuAccess = null;
-
-		con = com.eResorts.ConnectionPool.getConnection();
+		Session session = null;
 		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
 
-			String Query = LoginConstants.SQL_VALIDATE_LOGIN;
-			debugLogger("getLoginList query" + Query);
-			stmt = con.prepareStatement(Query);
-			stmt.setString(1, loginVO.getUserID() != null ? loginVO.getUserID()
-					: "0");
-			stmt.setString(2, loginVO.getPassword());
-			stmt.setString(3, loginVO.getAuth());
-			debugLogger("getLoginList stmt" + stmt);
-			rs = stmt.executeQuery();
-
-			Long id = 0l;
-
-			debugLogger("getLoginList query" + Query);
-			if (rs.isBeforeFirst()) {
-				while (rs.next()) {
-					authorizeVO.setResult(1);
-					id = rs.getLong(1);
-				}
-				authorizeVO.setLoginVO(loginVO);
-
-				String userQuery = LoginConstants.SQL_GET_USER;
-				rs = null;
-				stmt = null;
-
-				stmt = con.prepareStatement(userQuery);
-				stmt.setLong(1, id);
-
-				rs = stmt.executeQuery();
-				debugLogger("getLoginList userQuery " + stmt);
-				while (rs.next()) {
-					userVO = new UserVO();
-					userVO.setUserType(rs.getInt(9));
-					userVO.setApprove(1);
-					userVO.setRegID(id);
-				}
+			// Validating User and getting information from db.
+			Query validateQuery = session
+					.createQuery(LoginConstants.SQL_VALIDATE_LOGIN);
+			validateQuery.setString("userName", userVO.getUserName());
+			validateQuery.setString("password", userVO.getPassword());
+			validateQuery.setLong("userType", userVO.getUserType());
+			if (validateQuery.list().size() > 0) {
+				User userEntity = (User) validateQuery.list().get(0);
+				authorizeVO.setResult(1);
+				userVO = new UserVO();
+				userVO.setUserType(userEntity.getUserType().getUserTypeId());
+				userVO.setApprove(1);
+				userVO.setRegID(userEntity.getRegid());
 				authorizeVO.setUserVO(userVO);
 
+				// Setting Menu Access for the User..
 				menuAccess = new LinkedHashMap<String, String>();
-				String menuAccessQuery = LoginConstants.SQL_GET_MENU_ACCESS;
-				stmt = con.prepareStatement(menuAccessQuery);
-				stmt.setLong(1, userVO.getUserType());
-				debugLogger("getLoginList userQuery " + stmt);
-				rs = stmt.executeQuery();
-				while (rs.next()) {
-					menuAccess.put(rs.getString(1), rs.getString(2));
+				Query menuAccessQuery = session
+						.createQuery(LoginConstants.SQL_GET_MENU_ACCESS);
+				menuAccessQuery.setLong("userType", userVO.getUserType());
+				if (menuAccessQuery.list().size() > 0) {
+					List<MenuUserType> menuUserTypes = menuAccessQuery.list();
+					for (MenuUserType menuUserType : menuUserTypes)
+						menuAccess.put(menuUserType.getMenu(),
+								menuUserType.getPage());
+					authorizeVO.setMenuAccess(menuAccess);
 				}
-				authorizeVO.setMenuAccess(menuAccess);
-
 			} else {
 				authorizeVO.setResult(0);
 			}
-
-			con.close();
-			stmt.close();
 		} catch (Exception e) {
-
-			e.printStackTrace();
-			try {
-				con.close();
-				stmt.close();
-			} catch (SQLException e1) {
-
-				e1.printStackTrace();
-			}
-
+			PrintStackTraceLogger.getStackTrace(e);
 		}
 		return authorizeVO;
 
@@ -117,50 +88,25 @@ public class LoginDAOImpl implements LoginDAO {
 	public List<UserTypeVO> getUserType() {
 		List<UserTypeVO> userTypeVOList = new ArrayList<UserTypeVO>();
 		UserTypeVO userTypeVO = null;
-		Connection con = null;
-		ResultSet rs = null;
-		Statement stmt = null;
-
-		con = com.eResorts.ConnectionPool.getConnection();
+		Session session = null;
 		try {
-			stmt = con.createStatement();
-
-			String Query = LoginConstants.SQL_ALL_USERTYPE;
-			rs = stmt.executeQuery(Query);
-
-			Integer id;
-			String name;
-			String description;
-			debugLogger("getUserTypeList query" + Query);
-
-			while (rs.next()) {
-				userTypeVO = new UserTypeVO();
-				id = rs.getInt("user_type_id");
-				name = rs.getString("user_type");
-				description = rs.getString("user_type_description");
-
-				userTypeVO.setUserTypeId(id);
-				userTypeVO.setUserType(name);
-				userTypeVO.setUserTypeDesc(description);
-				userTypeVOList.add(userTypeVO);
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query query = session.createQuery(LoginConstants.SQL_ALL_USERTYPE);
+			if (query.list().size() > 0) {
+				List<UserType> types = query.list();
+				for (UserType userType : types) {
+					userTypeVO = new UserTypeVO();
+					userTypeVO.setUserTypeId(userType.getUserTypeId()
+							.intValue());
+					userTypeVO.setUserType(userType.getUserType());
+					userTypeVO.setUserTypeDesc(userType
+							.getUserTypeDescription());
+					userTypeVOList.add(userTypeVO);
+				}
 			}
-			con.close();
-			stmt.close();
 		} catch (Exception e) {
-
-			e.printStackTrace();
-			try {
-				if (con != null) {
-					con.close();
-				}
-				if (con != null) {
-					stmt.close();
-				}
-			} catch (SQLException e1) {
-
-				e1.printStackTrace();
-			}
-
+			PrintStackTraceLogger.getStackTrace(e);
 		}
 		return userTypeVOList;
 	}

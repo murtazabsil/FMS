@@ -9,9 +9,8 @@ import com.bluestar.fms.dal.LoginDAO;
 import com.bluestar.fms.dal.LoginDAOImpl;
 import com.bluestar.fms.helper.LoginHelper;
 import com.bluestar.fms.vo.AuthorizeVO;
-import com.bluestar.fms.vo.LoginVO;
-
 import com.bluestar.fms.vo.UserTypeVO;
+import com.bluestar.fms.vo.UserVO;
 
 
 public class LoginBSOImpl implements LoginBSO{
@@ -21,8 +20,8 @@ public class LoginBSOImpl implements LoginBSO{
 	public AuthorizeVO validateUser(HttpServletRequest request) {
 		
 		
-		LoginVO loginVO= LoginHelper.convertRequestToLoginVO(request);
-		AuthorizeVO authorizeVO = loginDAO.validateUser(loginVO);
+		UserVO userVO = LoginHelper.convertRequestToLoginVO(request);
+		AuthorizeVO authorizeVO = loginDAO.validateUser(userVO);
 		
 		return authorizeVO;
 	}

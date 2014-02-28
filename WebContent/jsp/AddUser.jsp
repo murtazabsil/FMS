@@ -140,7 +140,7 @@
 		designationList.add("1|LOB Head");
 		designationList.add("2|Account Head");
 		designationList.add("3|Project Manager");
-		
+
 		if (event == null) {
 	%>
 
@@ -156,7 +156,8 @@
 	<%
 		}
 	%>
-	<FORM NAME="RegUser" ACTION="<%=request.getContextPath()%>/Admin" onsubmit="return validate();">
+	<FORM NAME="RegUser" ACTION="<%=request.getContextPath()%>/Admin"
+		onsubmit="return validate();">
 		<input type='hidden' id='event' name='event' value='<%=event%>'>
 		<TABLE width="60%" align="center">
 			<TR class=row_even>
@@ -253,8 +254,8 @@
 			<%
 				} else {
 			%>
-			<input type="hidden" name='loginvo' id='loginvo'
-				value='<%=userVO.getLoginVO()%>'>
+			<%-- <input type="hidden" name='loginvo' id='loginvo'
+				value='<%=userVO.getLoginVO()%>'> --%>
 			<input type="hidden" name='regid' id='regid'
 				value='<%=userVO.getRegID()%>'>
 			<input type="hidden" name='uidhid' id='uidhid'
@@ -274,7 +275,7 @@
 								for (UserTypeVO userTypeVO : listUserType) {
 									if (userVO != null
 											&& userTypeVO.getUserTypeId() == userVO
-													.getUserType()) {
+													.getUserType().intValue()) {
 						%><OPTION Value=<%=userTypeVO.getUserTypeId()%>
 							selected="selected"><%=userTypeVO.getUserType()%></OPTION>
 						<%
@@ -289,8 +290,10 @@
 							}
 						%>
 						<TR>
-							<TH><INPUT class="sitewide-button" TYPE="submit" value='Submit'></TH>
-							<TH><INPUT class="sitewide-button" TYPE="reset" value='Clear'></TH>
+							<TH><INPUT class="sitewide-button" TYPE="submit"
+								value='Submit'></TH>
+							<TH><INPUT class="sitewide-button" TYPE="reset"
+								value='Clear'></TH>
 						</TR>
 		</TABLE>
 		<input type='hidden' name="addmodule" id="addmodule">
