@@ -137,9 +137,9 @@
 		System.out.println(" event  in user edit jsp------------" + event);
 		String designation = "";
 		List<String> designationList = new ArrayList<String>();
-		designationList.add("1|LOB Head");
-		designationList.add("2|Account Head");
-		designationList.add("3|Project Manager");
+		designationList.add("4|LOB Head");
+		designationList.add("3|Account Head");
+		designationList.add("2|Project Manager");
 
 		if (event == null) {
 	%>
@@ -157,8 +157,10 @@
 		}
 	%>
 	<FORM NAME="RegUser" ACTION="<%=request.getContextPath()%>/Admin"
-		onsubmit="return validate();">
+		onsubmit="return validate();" method="post">
 		<input type='hidden' id='event' name='event' value='<%=event%>'>
+		<input type="hidden" name="action" value="add">
+		<input type="hidden" name="module" value="user">
 		<TABLE width="60%" align="center">
 			<TR class=row_even>
 				<TH align="left">First Name <FONT COLOR="red">*</TH>
