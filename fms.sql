@@ -33,11 +33,11 @@ CREATE TABLE `account` (
   KEY `FK_account_location` (`account_location`),
   CONSTRAINT `FK_account_lob` FOREIGN KEY (`account_lob`) REFERENCES `lob` (`lob_id`),
   CONSTRAINT `FK_account_location` FOREIGN KEY (`account_location`) REFERENCES `location` (`location_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `account` */
 
-insert  into `account`(`account_id`,`account_name`,`account_lob`,`account_client`,`account_location`,`account_head`,`account_desc`) values (1,'TRISEPT',1,'abc coRP',1,'1','sadsad'),(2,'BLUESTAR',1,'blueSTAR',1,'1','dfsdffsfs'),(3,'TRISEPT',1,'trisept',1,'WSDSDQQ','CSADCDCSC'),(4,'TRISEPT',1,'TRISEPT',1,'DILIP','xcdsdcsd'),(5,'TRISEPT',2,'TRISEPT',2,'DILIP','zx ccdsscsc'),(6,'TEst',1,'Test',1,'test','test');
+insert  into `account`(`account_id`,`account_name`,`account_lob`,`account_client`,`account_location`,`account_head`,`account_desc`) values (1,'TRISEPT',1,'abc coRP',1,'1','sadsad'),(2,'BLUESTAR',1,'blueSTAR',1,'1','dfsdffsfs'),(3,'TRISEPT',1,'trisept',1,'WSDSDQQ','CSADCDCSC'),(4,'TRISEPT',1,'TRISEPT',1,'DILIP','xcdsdcsd'),(5,'TRISEPT',2,'TRISEPT',2,'DILIP','zx ccdsscsc');
 
 /*Table structure for table `city` */
 
@@ -126,9 +126,9 @@ CREATE TABLE `forecast` (
   KEY `FK_forecast_manager` (`created_by`),
   KEY `FK_forecast_project` (`project_id`,`created_by`),
   KEY `FK_forecast_month` (`forecast_month`),
+  CONSTRAINT `FK_forecast_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_forecast_manager` FOREIGN KEY (`created_by`) REFERENCES `manager` (`manager_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_forecast_month` FOREIGN KEY (`forecast_month`) REFERENCES `month` (`month_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_forecast_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`project_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_forecast_month` FOREIGN KEY (`forecast_month`) REFERENCES `month` (`month_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 /*Data for the table `forecast` */
@@ -182,11 +182,11 @@ CREATE TABLE `lob` (
   PRIMARY KEY (`lob_id`),
   KEY `FK_lob_location` (`lob_location`),
   CONSTRAINT `FK_lob_location` FOREIGN KEY (`lob_location`) REFERENCES `location` (`location_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `lob` */
 
-insert  into `lob`(`lob_id`,`lob_name`,`lob_location`,`lob_head`,`lob_desc`) values (1,'BAP',1,'1','1'),(2,'PES',2,'2','2'),(3,'abc',3,'3','3'),(4,'bap',1,'SDSDDSscsc','bap'),(5,'ABC',1,'sqqw','ABC'),(6,'SDSDFDFSF',1,'qwsass','SDSDFDFSF'),(7,'bap',1,'qwsass','bap'),(8,'bap',1,'qwsass','bap'),(9,'SDSDFDFSF',2,'qwsass','SDSDFDFSF'),(10,'TEst',1,'test','TEst');
+insert  into `lob`(`lob_id`,`lob_name`,`lob_location`,`lob_head`,`lob_desc`) values (1,'BAP',1,'1','1'),(2,'PES',2,'2','2'),(3,'abc',3,'3','3'),(4,'bap',1,'SDSDDSscsc','bap'),(5,'ABC',1,'sqqw','ABC'),(6,'SDSDFDFSF',1,'qwsass','SDSDFDFSF'),(7,'bap',1,'qwsass','bap'),(8,'bap',1,'qwsass','bap'),(9,'SDSDFDFSF',2,'qwsass','SDSDFDFSF');
 
 /*Table structure for table `location` */
 
@@ -227,11 +227,11 @@ CREATE TABLE `manager` (
   CONSTRAINT `FK_manager_acct` FOREIGN KEY (`manager_account_id`) REFERENCES `account` (`account_id`),
   CONSTRAINT `FK_manager_lob` FOREIGN KEY (`manager_lob_id`) REFERENCES `lob` (`lob_id`),
   CONSTRAINT `FK_manager_location` FOREIGN KEY (`manager_location_id`) REFERENCES `location` (`location_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 /*Data for the table `manager` */
 
-insert  into `manager`(`manager_id`,`manager_name`,`manager_emp_id`,`manager_dept_id`,`manager_lob_id`,`manager_account_id`,`manager_location_id`,`manager_currency`,`manager_descrition`) values (1,'zzxzxxzx','sddasdasda',1,1,1,1,1,'asccsaassdcsd'),(2,'Pankaj Amal','123456',1,1,1,1,1,'csdcdscsdcdscsd'),(3,'zzxzxxzx','sddasdasda',1,2,1,1,1,'rweewrewrw'),(16,'Murtaza Khan','302606',2,2,3,2,6,'Test');
+insert  into `manager`(`manager_id`,`manager_name`,`manager_emp_id`,`manager_dept_id`,`manager_lob_id`,`manager_account_id`,`manager_location_id`,`manager_currency`,`manager_descrition`) values (1,'zzxzxxzx','sddasdasda',1,1,1,1,1,'asccsaassdcsd'),(2,'Pankaj Amal','123456',1,1,1,1,1,'csdcdscsdcdscsd'),(3,'zzxzxxzx','sddasdasda',1,2,1,1,1,'rweewrewrw'),(4,'savil','302604',NULL,NULL,NULL,NULL,NULL,NULL),(5,'chandani','302643',NULL,NULL,NULL,NULL,NULL,NULL),(6,'murtaza','302606',NULL,NULL,NULL,NULL,NULL,NULL),(7,'murtaza','302606',NULL,NULL,NULL,NULL,NULL,NULL),(8,'m','302606',NULL,NULL,NULL,NULL,NULL,NULL),(9,'m','302606',NULL,NULL,NULL,NULL,NULL,NULL),(10,'m','302606',NULL,NULL,NULL,NULL,NULL,NULL),(11,'m','302606',NULL,NULL,NULL,NULL,NULL,NULL);
 
 /*Table structure for table `menu_user_type` */
 
@@ -324,11 +324,11 @@ CREATE TABLE `project` (
   CONSTRAINT `FK_priority` FOREIGN KEY (`project_priority`) REFERENCES `priority` (`priority_id`),
   CONSTRAINT `FK_status` FOREIGN KEY (`project_status`) REFERENCES `status` (`status_id`),
   CONSTRAINT `FK_type` FOREIGN KEY (`project_type`) REFERENCES `type` (`type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 /*Data for the table `project` */
 
-insert  into `project`(`project_id`,`project_name`,`project_lob`,`project_account`,`project_base_currency`,`project_priority`,`project_status`,`project_type`,`start_date`,`end_date`,`project_desc`) values (1,'Test',3,1,68,2,1,2,NULL,NULL,''),(2,'Genesis',1,2,147,3,4,4,NULL,NULL,''),(3,'EMS Charts',2,2,6,2,3,2,NULL,NULL,''),(4,'FMS',1,2,2,2,2,3,NULL,NULL,''),(5,'Home And Abroad',2,1,50,2,2,3,NULL,NULL,''),(6,'ABC',6,2,2,1,2,2,NULL,NULL,''),(7,'PMS',2,3,5,2,3,4,NULL,NULL,''),(8,'HOF',1,2,4,1,1,3,NULL,NULL,''),(9,'test',2,3,3,3,3,2,NULL,NULL,''),(10,'HOF',1,2,4,1,1,3,NULL,NULL,''),(11,'test',2,3,3,3,3,2,NULL,NULL,''),(12,'HOF',1,2,4,1,1,3,NULL,NULL,''),(13,'test',2,3,3,3,3,2,NULL,NULL,''),(14,'HOF',1,2,4,1,1,3,NULL,NULL,''),(15,'test',2,3,3,3,3,2,NULL,NULL,''),(16,'HOF',1,2,4,1,1,3,NULL,NULL,''),(17,'test',2,3,3,3,3,2,NULL,NULL,''),(18,'HOF',1,2,4,1,1,3,NULL,NULL,''),(19,'test',2,3,3,3,3,2,NULL,NULL,''),(20,'ABC',5,2,5,3,1,3,NULL,NULL,''),(21,'LMS',1,2,68,1,1,4,NULL,NULL,'Test Project.'),(22,'Test',3,2,2,3,3,2,NULL,NULL,''),(23,'LMS',2,1,4,1,2,2,NULL,NULL,''),(24,'Test Project',3,3,5,2,3,4,NULL,NULL,''),(25,'PMS',2,2,68,3,2,2,NULL,NULL,'Test.'),(26,'Test Project',6,3,68,2,4,3,NULL,NULL,'');
+insert  into `project`(`project_id`,`project_name`,`project_lob`,`project_account`,`project_base_currency`,`project_priority`,`project_status`,`project_type`,`start_date`,`end_date`,`project_desc`) values (1,'Test',3,1,68,2,1,2,NULL,NULL,''),(2,'Genesis',1,2,147,3,4,4,NULL,NULL,''),(3,'EMS Charts',2,2,6,2,3,2,NULL,NULL,''),(4,'FMS',1,2,2,2,2,3,NULL,NULL,''),(5,'Home And Abroad',2,1,50,2,2,3,NULL,NULL,''),(6,'ABC',6,2,2,1,2,2,NULL,NULL,''),(7,'PMS',2,3,5,2,3,4,NULL,NULL,''),(8,'HOF',1,2,4,1,1,3,NULL,NULL,''),(9,'test',2,3,3,3,3,2,NULL,NULL,''),(10,'HOF',1,2,4,1,1,3,NULL,NULL,''),(11,'test',2,3,3,3,3,2,NULL,NULL,''),(12,'HOF',1,2,4,1,1,3,NULL,NULL,''),(13,'test',2,3,3,3,3,2,NULL,NULL,''),(14,'HOF',1,2,4,1,1,3,NULL,NULL,''),(15,'test',2,3,3,3,3,2,NULL,NULL,''),(16,'HOF',1,2,4,1,1,3,NULL,NULL,''),(17,'test',2,3,3,3,3,2,NULL,NULL,''),(18,'HOF',1,2,4,1,1,3,NULL,NULL,''),(19,'test',2,3,3,3,3,2,NULL,NULL,''),(20,'ABC',5,2,5,3,1,3,NULL,NULL,''),(21,'LMS',1,2,68,1,1,4,NULL,NULL,'Test Project.'),(22,'Test',3,2,2,3,3,2,NULL,NULL,''),(23,'LMS',2,1,4,1,2,2,NULL,NULL,''),(24,'Test Project',3,3,5,2,3,4,NULL,NULL,'');
 
 /*Table structure for table `project_manager_link` */
 
@@ -397,12 +397,13 @@ CREATE TABLE `user` (
   `user_type` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`regid`),
   KEY `FK_userprofile_usertype` (`user_type`),
+  CONSTRAINT `FK_userprofile` FOREIGN KEY (`regid`) REFERENCES `login` (`id`),
   CONSTRAINT `FK_userprofile_usertype` FOREIGN KEY (`user_type`) REFERENCES `user_type` (`user_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `user` */
 
-insert  into `user`(`regid`,`userid`,`password`,`FirstName`,`LastName`,`address`,`emailaddress`,`designation`,`empid`,`contactnumber`,`user_type`) values (1,'admin','admin','adczxv',NULL,'  cdsdsssc`','dasad@dewdewd.com',1,'1234','12233213',1),(18,'murtaza','murtaza','Murtaza','Khan','terer','murtaza.khan@bsil.com',3,'302606','9967108612',2),(19,'prasad','prasad','Prasad','Khavnekar','Test','prasad.khavnekar@bsil.com',3,'302605','976856555',2),(20,'prasad','prasad','Prasad','Khavnekar','TEst','prasad.khavnekar@bsil.com',2,'302605','976856555',2);
+insert  into `user`(`regid`,`userid`,`password`,`FirstName`,`LastName`,`address`,`emailaddress`,`designation`,`empid`,`contactnumber`,`user_type`) values (1,'admin','admin','adczxv',NULL,'  cdsdsssc`','dasad@dewdewd.com',1,'1234','12233213',1);
 
 /*Table structure for table `user_type` */
 
