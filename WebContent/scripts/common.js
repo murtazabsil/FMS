@@ -15,8 +15,8 @@ $(document).ready(function(){
 	});
 	$('#manager-link-button').click(function(){
 		var action = "action=linkmanager";
-		var managerId = $('manager-project-id').val();
-		var url = $('context-path').val() + "/Admin?"+action+"&managerId="+managerId+"&projectId="+projectId;
+		var managerId = $('#manager-project-id').val();
+		var url = $('#context-path').val() + "/Admin?"+action+"&managerId="+managerId+"&projectId="+projectId;
 		$.ajax({
 			url:url,
 			success:function(data){

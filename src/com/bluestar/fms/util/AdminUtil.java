@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.bluestar.fms.bso.AdminBSO;
+import com.bluestar.fms.bso.AdminBSOImpl;
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Currency;
 import com.bluestar.fms.entity.Lob;
@@ -13,6 +15,7 @@ import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Module;
 import com.bluestar.fms.entity.Priority;
 import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.entity.Status;
 import com.bluestar.fms.entity.Type;
 import com.bluestar.fms.entity.User;
@@ -24,6 +27,7 @@ import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
 import com.bluestar.fms.vo.PriorityVO;
+import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
 import com.bluestar.fms.vo.StatusVO;
 import com.bluestar.fms.vo.TypeVO;
@@ -212,26 +216,24 @@ public class AdminUtil {
 		return user;
 	}
 
-	/*public static Login convertLoginVOtoEntity(LoginVO loginVO) {
-
-		Login login = null;
-
-		if (loginVO != null) {
-
-			login = new Login();
-			// login.setId(loginVO.getId());
-			login.setUserID(loginVO.getUserID());
-			login.setPassword(loginVO.getPassword());
-
-			UserType usertType = new UserType();
-			usertType.setUserTypeId(converBigItegerToLong(new BigInteger(
-					loginVO.getUserType() + "")));
-			login.setUserType(usertType);
-			login.setAuth("1");
-		}
-		return login;
-
-	}*/
+	/*
+	 * public static Login convertLoginVOtoEntity(LoginVO loginVO) {
+	 * 
+	 * Login login = null;
+	 * 
+	 * if (loginVO != null) {
+	 * 
+	 * login = new Login(); // login.setId(loginVO.getId());
+	 * login.setUserID(loginVO.getUserID());
+	 * login.setPassword(loginVO.getPassword());
+	 * 
+	 * UserType usertType = new UserType();
+	 * usertType.setUserTypeId(converBigItegerToLong(new BigInteger(
+	 * loginVO.getUserType() + ""))); login.setUserType(usertType);
+	 * login.setAuth("1"); } return login;
+	 * 
+	 * }
+	 */
 
 	public static ProjectVO convertProjectEntityToVO(Project project) {
 		ProjectVO projectVO = null;
@@ -392,13 +394,14 @@ public class AdminUtil {
 		if (user != null) {
 			// System.out.println("in convertUserEntityToVO user not null");
 			userVO = new UserVO();
-			/*LoginVO loginVO = new LoginVO();
-			loginVO.setId(user.getLogin().getId());
-			loginVO.setPassword(user.getLogin().getPassword());
-			loginVO.setUserID(user.getLogin().getUserID());
-			loginVO.setUserType(user.getLogin().getUserType().getUserTypeId()
-					.intValue());
-			userVO.setLoginVO(loginVO);*/
+			/*
+			 * LoginVO loginVO = new LoginVO();
+			 * loginVO.setId(user.getLogin().getId());
+			 * loginVO.setPassword(user.getLogin().getPassword());
+			 * loginVO.setUserID(user.getLogin().getUserID());
+			 * loginVO.setUserType(user.getLogin().getUserType().getUserTypeId()
+			 * .intValue()); userVO.setLoginVO(loginVO);
+			 */
 
 			userVO.setRegID(user.getRegid());
 			userVO.setUserName(user.getUserid());
@@ -682,6 +685,26 @@ public class AdminUtil {
 		}
 
 		return statusVO;
+	}
+
+	public static ProjectManagerLink convertProjectManagerLinkVOToProjectManagerLinkEntity(
+			ProjectManagerLinkVO projectManagerLinkVO) {
+		// TODO Auto-generated method stub
+		ProjectManagerLink projectManagerLink = null;
+		AdminBSO adminBSO = null;
+		try {
+			adminBSO = new AdminBSOImpl();
+			projectManagerLink = new ProjectManagerLink();
+			projectManagerLink.setManagerId(adminBSO
+					.getManagerFromManagerId(projectManagerLinkVO
+							.getManagerId()));
+			projectManagerLink.setProjectId(adminBSO
+					.getProjectFromProjectId(projectManagerLinkVO
+							.getProjectId()));
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectManagerLink;
 	}
 
 }

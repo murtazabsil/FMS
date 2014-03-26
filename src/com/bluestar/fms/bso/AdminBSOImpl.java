@@ -10,6 +10,9 @@ import com.bluestar.fms.dal.AdminDAO;
 import com.bluestar.fms.dal.AdminDAOImpl;
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Lob;
+import com.bluestar.fms.entity.Manager;
+import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.helper.AdminHelper;
 import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.util.UserType;
@@ -22,6 +25,7 @@ import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
 import com.bluestar.fms.vo.PriorityVO;
+import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
 import com.bluestar.fms.vo.ResponseVO;
 import com.bluestar.fms.vo.StatusVO;
@@ -63,7 +67,8 @@ public class AdminBSOImpl implements AdminBSO {
 			Integer userType = new Integer(request.getParameter("userType"));
 			UserVO userVO = AdminHelper.convertRequestToUserVO(request);
 			if (userType == UserType.MANAGER.getUserType()) {
-				ManagerVO managerVO = AdminHelper.getMAnagerVOFromUserVO(userVO);
+				ManagerVO managerVO = AdminHelper
+						.getMAnagerVOFromUserVO(userVO);
 				adminDAOImpl.addManagerFromUser(managerVO);
 			}
 			responseVO = adminDAOImpl.addUser(userVO);
@@ -262,10 +267,10 @@ public class AdminBSOImpl implements AdminBSO {
 		// TODO Auto-generated method stub
 		AdminDAO adminDAO = null;
 		Account account = null;
-		try{
+		try {
 			adminDAO = new AdminDAOImpl();
 			account = adminDAO.getAccountFromAccountId(accountId);
-		}catch(Exception exception){
+		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return account;
@@ -276,13 +281,59 @@ public class AdminBSOImpl implements AdminBSO {
 		// TODO Auto-generated method stub
 		AdminDAO adminDAO = null;
 		Lob lob = null;
-		try{
+		try {
 			adminDAO = new AdminDAOImpl();
 			lob = adminDAO.getLobFromLobId(lobId);
-		}catch(Exception exception){
+		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return lob;
+	}
+
+	@Override
+	public ProjectManagerLink linkManagerToProject(Long managerId,
+			Long projectId) {
+		// TODO Auto-generated method stub
+		ProjectManagerLinkVO projectManagerLinkVO = new ProjectManagerLinkVO();
+		AdminDAO adminDAO = null;
+		ProjectManagerLink projectManagerLink = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			projectManagerLinkVO.setManagerId(managerId);
+			projectManagerLinkVO.setProjectId(projectId);
+			adminDAO.linkManagerToProject(projectManagerLinkVO);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectManagerLink;
+	}
+
+	@Override
+	public Project getProjectFromProjectId(Long projectId) {
+		// TODO Auto-generated method stub
+		AdminDAO adminDAO = null;
+		Project project = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			project = adminDAO.getProjectFromProjectId(projectId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return project;
+	}
+
+	@Override
+	public Manager getManagerFromManagerId(Long managerId) {
+		// TODO Auto-generated method stub
+		AdminDAO adminDAO = null;
+		Manager manager = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			manager = adminDAO.getManagerFromManagerId(managerId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return manager;
 	}
 
 }

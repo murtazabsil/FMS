@@ -5,6 +5,9 @@ import java.util.List;
 
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Lob;
+import com.bluestar.fms.entity.Manager;
+import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.LinkVO;
 import com.bluestar.fms.vo.LobVO;
@@ -12,6 +15,7 @@ import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
 import com.bluestar.fms.vo.PriorityVO;
+import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
 import com.bluestar.fms.vo.ResponseVO;
 import com.bluestar.fms.vo.StatusVO;
@@ -59,4 +63,8 @@ public interface AdminDAO {
 	
 	public Account getAccountFromAccountId(Long accountId);
 	public Lob getLobFromLobId(Long lobId);
+	public Project getProjectFromProjectId(Long projectId);
+	public Manager getManagerFromManagerId(Long managerId);
+	
+	public ProjectManagerLink linkManagerToProject(ProjectManagerLinkVO projectManagerLinkVO);
 }

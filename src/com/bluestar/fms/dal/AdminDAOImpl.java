@@ -17,6 +17,7 @@ import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Module;
 import com.bluestar.fms.entity.Priority;
 import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.entity.Status;
 import com.bluestar.fms.entity.Type;
 import com.bluestar.fms.entity.User;
@@ -32,6 +33,7 @@ import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
 import com.bluestar.fms.vo.PriorityVO;
+import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
 import com.bluestar.fms.vo.ResponseVO;
 import com.bluestar.fms.vo.StatusVO;
@@ -1046,6 +1048,65 @@ public class AdminDAOImpl implements AdminDAO {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return lob;
+	}
+
+	@Override
+	public ProjectManagerLink linkManagerToProject(
+			ProjectManagerLinkVO projectManagerLinkVO) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		ProjectManagerLink projectManagerLink = null;
+		Transaction transaction = null;
+		try {
+			projectManagerLink = AdminUtil
+					.convertProjectManagerLinkVOToProjectManagerLinkEntity(projectManagerLinkVO);
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			transaction = session.beginTransaction();
+			daoManager = new DAOManager(session);
+			daoManager.createOrUpdate(projectManagerLink);
+			transaction.commit();
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+			if (transaction != null)
+				transaction.rollback();
+		}
+		return projectManagerLink;
+	}
+
+	@Override
+	public Project getProjectFromProjectId(Long projectId) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		Project project = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			project = daoManager.find(projectId, "Project");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return project;
+	}
+
+	@Override
+	public Manager getManagerFromManagerId(Long managerId) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		Manager manager = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			manager = daoManager.find(managerId, "Manager");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return manager;
 	}
 
 }

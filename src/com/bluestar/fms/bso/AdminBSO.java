@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Lob;
+import com.bluestar.fms.entity.Manager;
+import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.ExchageRateVO;
 import com.bluestar.fms.vo.LobVO;
@@ -50,5 +53,9 @@ public interface AdminBSO {
 		public List<ExchageRateVO> getExchangeRateVOList(String exmodule);
 		
 		public Account getAccountFromAccountId(Long accountId);
+		public Project getProjectFromProjectId(Long projectId);
+		public Manager getManagerFromManagerId(Long managerId);
 		public Lob getLobFromLobId(Long lobId);
+		
+		public ProjectManagerLink linkManagerToProject(Long managerId,Long projectId);
 }

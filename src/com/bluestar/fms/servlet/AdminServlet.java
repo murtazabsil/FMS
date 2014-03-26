@@ -81,10 +81,11 @@ public class AdminServlet extends HttpServlet {
 			} else {
 				debugLogger("----- action -----" + action);
 				if (action != null && action.equals("linkmanager")) {
-					Long projectId = Long.parseLong(request.getParameter("projectId"));
-					Long managerId = Long.parseLong(request.getParameter("managerId"));
-					
-					
+					Long projectId = Long.parseLong(request
+							.getParameter("projectId"));
+					Long managerId = Long.parseLong(request
+							.getParameter("managerId"));
+					adminBSO.linkManagerToProject(managerId, projectId);
 				} else if (action != null && action.equals("viewproject")) {
 
 					String event = request.getParameter("event");
