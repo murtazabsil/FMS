@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.bluestar.fms.dal.AdminDAO;
 import com.bluestar.fms.dal.AdminDAOImpl;
+import com.bluestar.fms.entity.Account;
+import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.helper.AdminHelper;
+import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.util.UserType;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.CurrencyVO;
@@ -252,6 +255,34 @@ public class AdminBSOImpl implements AdminBSO {
 		List<ProjectVO> listProjectVO = adminDAOImpl.getProjectList(userType,
 				userId);
 		return listProjectVO;
+	}
+
+	@Override
+	public Account getAccountFromAccountId(Long accountId) {
+		// TODO Auto-generated method stub
+		AdminDAO adminDAO = null;
+		Account account = null;
+		try{
+			adminDAO = new AdminDAOImpl();
+			account = adminDAO.getAccountFromAccountId(accountId);
+		}catch(Exception exception){
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return account;
+	}
+
+	@Override
+	public Lob getLobFromLobId(Long lobId) {
+		// TODO Auto-generated method stub
+		AdminDAO adminDAO = null;
+		Lob lob = null;
+		try{
+			adminDAO = new AdminDAOImpl();
+			lob = adminDAO.getLobFromLobId(lobId);
+		}catch(Exception exception){
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return lob;
 	}
 
 }

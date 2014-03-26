@@ -3,6 +3,8 @@ package com.bluestar.fms.dal;
 
 import java.util.List;
 
+import com.bluestar.fms.entity.Account;
+import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.LinkVO;
 import com.bluestar.fms.vo.LobVO;
@@ -55,5 +57,6 @@ public interface AdminDAO {
 	public UserVO getUserDetails(String idToEdit);
 	public List<UserVO> getUserList();
 	
-	
+	public Account getAccountFromAccountId(Long accountId);
+	public Lob getLobFromLobId(Long lobId);
 }

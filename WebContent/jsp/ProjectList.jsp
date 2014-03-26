@@ -1,3 +1,4 @@
+<%@page import="com.bluestar.fms.vo.ManagerVO"%>
 <%@page import="com.bluestar.fms.vo.ProjectVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bluestar.fms.util.PrintStackTraceLogger"%>
@@ -18,7 +19,9 @@
 		AdminBSO adminBSO = new AdminBSOImpl();
 		try {
 			List<ProjectVO> projectList = adminBSO.getProjectList();
+			List<ManagerVO> managerList = adminBSO.getManagerList();
 			request.setAttribute("projectList", projectList);
+			request.setAttribute("managerList", managerList);
 		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
@@ -59,7 +62,7 @@
 							<td>${element.projectStatusName}</td>
 							<td><a
 								href="<%=request.getContextPath()%>/Admin?action=edit&event=1&id=${element.projectId}">Edit</a></td>
-							<td>${element.projectTypeName}</td>
+							<td><span class="link-manager" id="${element.projectId}">Link To Manager</span></td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -72,7 +75,15 @@
 			style="font-weight: normal;"> Please keep mouse over Project
 			Name to get description.</span>
 	</div>
-
+	<div id="pop-up-container" title="Link Manager">
+		Select manager to link to project : 
+		<select id="manager-project-id">
+			<c:forEach items="${managerList}" var="element">
+				<option value="${element.managerId}">${element.managerName}</option>
+			</c:forEach>
+		</select>
+		<button id="manager-link-button">Submit</button>
+	</div>
 	<jsp:include page="Footer.html"></jsp:include>
 </body>
 </html>

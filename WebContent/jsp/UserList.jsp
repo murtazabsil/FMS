@@ -1,3 +1,4 @@
+<%@page import="com.bluestar.fms.vo.ManagerVO"%>
 <%@page import="com.bluestar.fms.vo.UserVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bluestar.fms.util.PrintStackTraceLogger"%>

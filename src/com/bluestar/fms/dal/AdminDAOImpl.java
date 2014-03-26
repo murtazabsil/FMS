@@ -7,6 +7,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.bluestar.fms.bso.AdminBSO;
+import com.bluestar.fms.bso.AdminBSOImpl;
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Currency;
 import com.bluestar.fms.entity.Lob;
@@ -977,29 +979,73 @@ public class AdminDAOImpl implements AdminDAO {
 	public void addManagerFromUser(ManagerVO managerVO) {
 		Transaction trn = null;
 		Manager managerEntity = null;
+		AdminBSO adminBSO = null;
+		Session session = null;
+		DAOManager daoManager = null;
 		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			adminBSO = new AdminBSOImpl();
 			managerEntity = new Manager();
 			managerEntity.setManagerName(managerVO.getManagerName());
 			managerEntity.setManagerEmpId(managerVO.getManagerEmpId());
-			Session session = ConnectionManager.getSession(ConfigReader
-					.getMastersConfig());
-			try {
-				DAOManager daoMgr = new DAOManager(session);
-				trn = session.getTransaction();
-				trn.begin();
-				daoMgr.createOrUpdate(managerEntity);
-				trn.commit();
-			} catch (Exception e) {
-				e.printStackTrace();
-				if (session != null) {
-					if (session.isOpen()) {
-						session.beginTransaction().rollback();
-					}
+			managerEntity.setManagerAccountId(adminBSO
+					.getAccountFromAccountId(managerVO.getManagerAccountId()
+							.longValue()));
+			managerEntity.setManagerLobId(adminBSO.getLobFromLobId(managerVO
+					.getManagerLobId().longValue()));
+			managerEntity.setManagerCurrency((Currency) daoManager.find(
+					managerVO.getManagerCurrency().longValue(), "Currency"));
+			managerEntity.setManagerLocationId((Location) daoManager.find(
+					managerVO.getManagerLocationId().longValue(), "Location"));
+			DAOManager daoMgr = new DAOManager(session);
+			trn = session.getTransaction();
+			trn.begin();
+			daoMgr.createOrUpdate(managerEntity);
+			trn.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (session != null) {
+				if (session.isOpen()) {
+					session.beginTransaction().rollback();
 				}
 			}
-		} catch (Exception e) {
-			PrintStackTraceLogger.getStackTrace(e);
 		}
+	}
+
+	@Override
+	public Account getAccountFromAccountId(Long accountId) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		Account account = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			account = daoManager.find(accountId, "Account");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return account;
+	}
+
+	@Override
+	public Lob getLobFromLobId(Long lobId) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		Lob lob = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			lob = daoManager.find(lobId, "Lob");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return lob;
 	}
 
 }

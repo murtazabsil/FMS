@@ -7,8 +7,12 @@
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/scripts/jquery-1.9.1.js"></script>
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/scripts/jquery-ui.js"></script>
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/scripts/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/scripts/common.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/dataTables.css">
 <LINK href="<%=request.getContextPath()%>/css/styles.css"
@@ -17,6 +21,9 @@
 	type="text/css" rel="stylesheet">
 <LINK href="<%=request.getContextPath()%>/css/bootstrap-theme.min.css"
 	type="text/css" rel="stylesheet">
+	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/jquery-ui.css"
+	type="text/css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/css3menu1/style.css"
 	type="text/css" />
@@ -33,6 +40,7 @@
 	src="<%=request.getContextPath()%>/scripts/bootstrap.min.js"></script>
 </head>
 <body>
+	<input type="hidden" id="context-path" value="<%=request.getContextPath()%>">
 	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav">
 		<div id="body-wrapper" class="container">
 			<div class="navbar-header">

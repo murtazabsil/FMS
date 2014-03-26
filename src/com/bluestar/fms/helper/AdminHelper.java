@@ -1,11 +1,14 @@
 package com.bluestar.fms.helper;
 
 import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.CurrencyVO;
 import com.bluestar.fms.vo.LinkVO;
@@ -23,35 +26,44 @@ public class AdminHelper {
 
 	public static ProjectVO convertRequestToProjectVO(HttpServletRequest request) {
 
+		SimpleDateFormat outDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		SimpleDateFormat inDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		ProjectVO projectVO = new ProjectVO();
-		;
 		// projectName projectLob projectAccount baselocation basecurrency
 		// priority
 		// projectStatus projectType startdate enddate projectDesc
-		if ((request.getParameter("id") != null))
-			projectVO.setProjectId(new Long(request.getParameter("id")));
-		projectVO.setProjectName(request.getParameter("projectName"));
-		projectVO.setProjectDesc(request.getParameter("projectDesc"));
-		projectVO.setProjectLob(new BigInteger(request
-				.getParameter("projectLob")));
-		projectVO.setProjectAccount(new BigInteger(request
-				.getParameter("projectAccount")));
-		projectVO.setProjectBaseCurrency(new BigInteger(request
-				.getParameter("basecurrency")));
-		projectVO.setProjectPriority(new BigInteger(request
-				.getParameter("priority")));
-		projectVO.setProjectStatus(new BigInteger(request
-				.getParameter("projectStatus")));
-		projectVO.setProjectType(new BigInteger(request
-				.getParameter("projectType")));
-		projectVO.setProjectPriority(new BigInteger(request
-				.getParameter("priority")));
-		projectVO
-				.setPmId(request.getParameter("priority") != null ? new BigInteger(
-						request.getParameter("priority")) : new BigInteger("1"));
-		projectVO.setStartDate(null);// request.getParameter("projectName"));
-		projectVO.setEndDate(null);// request.getParameter("projectName"));
-
+		try {
+			if ((request.getParameter("id") != null))
+				projectVO.setProjectId(new Long(request.getParameter("id")));
+			projectVO.setProjectName(request.getParameter("projectName"));
+			projectVO.setProjectDesc(request.getParameter("projectDesc"));
+			projectVO.setProjectLob(new BigInteger(request
+					.getParameter("projectLob")));
+			projectVO.setProjectAccount(new BigInteger(request
+					.getParameter("projectAccount")));
+			projectVO.setProjectBaseCurrency(new BigInteger(request
+					.getParameter("basecurrency")));
+			projectVO.setProjectPriority(new BigInteger(request
+					.getParameter("priority")));
+			projectVO.setProjectStatus(new BigInteger(request
+					.getParameter("projectStatus")));
+			projectVO.setProjectType(new BigInteger(request
+					.getParameter("projectType")));
+			projectVO.setProjectPriority(new BigInteger(request
+					.getParameter("priority")));
+			projectVO
+					.setPmId(request.getParameter("priority") != null ? new BigInteger(
+							request.getParameter("priority")) : new BigInteger(
+							"1"));
+			String startDate = request.getParameter("startdate");
+			String endDate = request.getParameter("enddate");
+			if (startDate != null)
+				projectVO.setStartDate(inDateFormat.parse(startDate));// request.getParameter("projectName"));
+			if (endDate != null)
+				projectVO.setEndDate(inDateFormat.parse(endDate));// request.getParameter("projectName"));
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
 		return projectVO;
 	}
 
@@ -281,6 +293,10 @@ public class AdminHelper {
 		ManagerVO managerVO = new ManagerVO();
 		managerVO.setManagerName(userVO.getUserName());
 		managerVO.setManagerEmpId(userVO.getEmpId());
+		managerVO.setManagerLobId(new BigInteger("1"));
+		managerVO.setManagerAccountId(new BigInteger("1"));
+		managerVO.setManagerLocationId(new BigInteger("1"));
+		managerVO.setManagerCurrency(new BigInteger("1"));
 		return managerVO;
 	}
 }

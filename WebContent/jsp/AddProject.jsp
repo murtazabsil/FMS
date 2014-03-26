@@ -205,7 +205,7 @@
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!--  <input type="text" id="startdatepicker" /> -->
-							<input id="startdate" type="text" size="15">
+							<input name="startdate" id="startdate" type="text" size="15">
 						</p></TD>
 				</TR>
 				<tr class=row_even>
@@ -214,7 +214,7 @@
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!-- <input type="text" id="enddatepicker" /> -->
-							<input id="enddate" type="text" size="15">
+							<input name="enddate" id="enddate" type="text" size="15">
 						</p></TD>
 				</TR>
 

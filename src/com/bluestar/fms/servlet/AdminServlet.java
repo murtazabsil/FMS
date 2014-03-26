@@ -21,6 +21,7 @@ import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Project;
+import com.bluestar.fms.entity.ProjectManagerLink;
 import com.bluestar.fms.entity.User;
 import com.bluestar.fms.helper.AdminHelper;
 import com.bluestar.fms.util.AdminUtil;
@@ -79,7 +80,12 @@ public class AdminServlet extends HttpServlet {
 
 			} else {
 				debugLogger("----- action -----" + action);
-				if (action != null && action.equals("viewproject")) {
+				if (action != null && action.equals("linkmanager")) {
+					Long projectId = Long.parseLong(request.getParameter("projectId"));
+					Long managerId = Long.parseLong(request.getParameter("managerId"));
+					
+					
+				} else if (action != null && action.equals("viewproject")) {
 
 					String event = request.getParameter("event");
 					System.out.println("event ---------------" + event);
@@ -348,7 +354,6 @@ public class AdminServlet extends HttpServlet {
 		} finally {
 			if (transaction != null) {
 				transaction.commit();
-				session.flush();
 			}
 		}
 	}

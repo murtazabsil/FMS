@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java"%>
 <%@ page session="true"%>
 <%@ page
@@ -462,7 +463,8 @@ $(document).ready(function(){
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!--  <input type="text" id="startdatepicker" /> -->
-							<input id="startdate" type="text" size="15"><a
+							<% SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); %>
+							<input name="startdate" id="startdate" type="text" size="15" value="<%=dateFormat.format(projectVO.getStartDate())%>"><a
 								href="javascript:NewCal('startdate','ddmmyyyy')"><img
 								src="Images/cal.gif" width="16" height="16" border="0"
 								alt="Pick a date"> </a>
@@ -474,7 +476,7 @@ $(document).ready(function(){
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!-- <input type="text" id="enddatepicker" /> -->
-							<input id="enddate" type="text" size="15"><a
+							<input name="enddate" id="enddate" type="text" size="15" value="<%=dateFormat.format(projectVO.getEndDate())%>"><a
 								href="javascript:NewCal('enddate','ddmmyyyy')"><img
 								src="Images/cal.gif" width="16" height="16" border="0"
 								alt="Pick a date"> </a>

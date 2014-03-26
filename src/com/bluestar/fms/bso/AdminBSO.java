@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bluestar.fms.entity.Account;
+import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.ExchageRateVO;
 import com.bluestar.fms.vo.LobVO;
@@ -47,5 +49,6 @@ public interface AdminBSO {
 
 		public List<ExchageRateVO> getExchangeRateVOList(String exmodule);
 		
-			
+		public Account getAccountFromAccountId(Long accountId);
+		public Lob getLobFromLobId(Long lobId);
 }

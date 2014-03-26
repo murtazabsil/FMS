@@ -333,7 +333,7 @@ H1,H3,H4,H5 {
 	border: !important none;
 }
 
-#project-list-table thead th{
+#project-list-table thead th {
 	text-align: center;
 }
 
@@ -363,10 +363,15 @@ H1,H3,H4,H5 {
 	}
 }
 
-#form-wrapper td{
+#form-wrapper td {
 	width: 40%;
 }
 
-#form-wrapper tr{
+#form-wrapper tr {
 	height: 2%;
+}
+
+#manager-link-button {
+	margin-left: 37%;
+	margin-top: 4%;
 }

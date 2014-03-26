@@ -67,6 +67,8 @@ public class AdminUtil {
 			type.setTypeId(converBigItegerToLong(projectvo.getProjectType()));
 			project.setProjectType(type);
 
+			project.setStartDate(projectvo.getStartDate());
+			project.setEndDate(projectvo.getEndDate());
 			Manager manager = new Manager();
 			System.out.println("pm id in util" + projectvo.getPmId());
 			// manager.setManagerId(new Long(projectvo.getPmId()+""));

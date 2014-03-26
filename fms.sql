@@ -205,7 +205,6 @@ CREATE TABLE `location` (
 insert  into `location`(`location_id`,`location_name`,`location_code`,`location_desc`) values (1,'INDIA','IND','india'),(2,'UK','UK','UK'),(3,'USA','USA','USA'),(4,'SINGAPORE','SINGAPORE','sing');
 
 /*Table structure for table `manager` */
-
 DROP TABLE IF EXISTS `manager`;
 
 CREATE TABLE `manager` (
@@ -397,7 +396,6 @@ CREATE TABLE `user` (
   `user_type` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`regid`),
   KEY `FK_userprofile_usertype` (`user_type`),
-  CONSTRAINT `FK_userprofile` FOREIGN KEY (`regid`) REFERENCES `login` (`id`),
   CONSTRAINT `FK_userprofile_usertype` FOREIGN KEY (`user_type`) REFERENCES `user_type` (`user_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
