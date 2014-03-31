@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bluestar.fms.entity.Forecast;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Month;
 import com.bluestar.fms.entity.Project;
@@ -16,4 +17,6 @@ public interface ForecastBSO {
 	public List<ForecastVO> getForecastList(HttpServletRequest request); 
 	public Project getProjectById(Long projectId);
 	public Manager getManagerById(Long managerId);
+	public ForecastVO getForecastDetails(Long forecastId);
+	public Forecast getForecastEntity(Long forecastId);
 }

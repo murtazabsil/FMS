@@ -21,7 +21,11 @@ public class LobVO implements Serializable {
    
     private BigInteger lobLocation;
     
-    private String lobHead;
+    private String lobLocationName;
+    
+    private Long lobHeadId;
+    
+    private String lobHeadName;
    
     private String lobDesc;
 
@@ -49,15 +53,6 @@ public class LobVO implements Serializable {
     public void setLobLocation(BigInteger lobLocation) {
         this.lobLocation = lobLocation;
     }
-
-    public String getLobHead() {
-        return lobHead;
-    }
-
-    public void setLobHead(String lobHead) {
-        this.lobHead = lobHead;
-    }
-
     public String getLobDesc() {
         return lobDesc;
     }
@@ -66,6 +61,28 @@ public class LobVO implements Serializable {
         this.lobDesc = lobDesc;
     }
 
-   
+	public Long getLobHeadId() {
+		return lobHeadId;
+	}
+
+	public void setLobHeadId(Long lobHeadId) {
+		this.lobHeadId = lobHeadId;
+	}
+
+	public String getLobHeadName() {
+		return lobHeadName;
+	}
+
+	public void setLobHeadName(String lobHeadName) {
+		this.lobHeadName = lobHeadName;
+	}
+
+	public String getLobLocationName() {
+		return lobLocationName;
+	}
+
+	public void setLobLocationName(String lobLocationName) {
+		this.lobLocationName = lobLocationName;
+	}
     
 }

@@ -50,6 +50,10 @@ public class LoginDAOImpl implements LoginDAO {
 				userVO.setApprove(1);
 				userVO.setRegID(userEntity.getRegid());
 				authorizeVO.setUserVO(userVO);
+				
+				if(userVO.getUserType() == com.bluestar.fms.util.UserType.MANAGER.getUserType()){
+					
+				}
 
 				// Setting Menu Access for the User..
 				menuAccess = new LinkedHashMap<String, String>();

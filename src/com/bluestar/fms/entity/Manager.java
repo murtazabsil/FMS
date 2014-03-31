@@ -74,6 +74,8 @@ public class Manager implements Serializable {
     private Collection<Forecast> forecastCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "managerId")
     private Collection<ProjectManagerLink> projectManagerLinkCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    private Collection<Actual> actualCollection;
 
     public Manager() {
     }
@@ -170,6 +172,15 @@ public class Manager implements Serializable {
 
     public void setProjectManagerLinkCollection(Collection<ProjectManagerLink> projectManagerLinkCollection) {
         this.projectManagerLinkCollection = projectManagerLinkCollection;
+    }
+
+    @XmlTransient
+    public Collection<Actual> getActualCollection() {
+        return actualCollection;
+    }
+
+    public void setActualCollection(Collection<Actual> actualCollection) {
+        this.actualCollection = actualCollection;
     }
 
     @Override

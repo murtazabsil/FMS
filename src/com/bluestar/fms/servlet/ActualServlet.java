@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.jms.ObjectMessage;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,23 +13,26 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.bluestar.fms.bso.ActualBSO;
+import com.bluestar.fms.bso.ActualBSOImpl;
 import com.bluestar.fms.bso.ForecastBSO;
 import com.bluestar.fms.bso.ForecastBSOImpl;
 import com.bluestar.fms.entity.Forecast;
 import com.bluestar.fms.util.ForecastUtil;
 import com.bluestar.fms.util.PrintStackTraceLogger;
+import com.bluestar.fms.vo.ActualVO;
 import com.bluestar.fms.vo.ForecastVO;
 
 /**
  * Servlet implementation class ForecastServlet
  */
-public class ForecastServlet extends HttpServlet {
+public class ActualServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ForecastServlet() {
+	public ActualServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,32 +44,48 @@ public class ForecastServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		ActualBSO actualBSO = null;
 		ForecastBSO forecastBSO = null;
 		try {
+			actualBSO = new ActualBSOImpl();
 			forecastBSO = new ForecastBSOImpl();
 			String requestFrom = request.getParameter("requestFrom");
 			if (requestFrom != null) {
-				if (requestFrom.equalsIgnoreCase("ForecastList")) {
-					List<ForecastVO> forecastVOs = forecastBSO
-							.getForecastList(request);
-					request.setAttribute("forecastList", forecastVOs);
-					request.setAttribute("Path", "ForecastList");
+				if (requestFrom.equalsIgnoreCase("ActualList")) {
+					List<ActualVO> actualVOs = actualBSO.getActualList(request);
+					request.setAttribute("actualList", actualVOs);
+					request.setAttribute("Path", "ActualList");
 				}
-				if (requestFrom.equalsIgnoreCase("ForecastEdit")) {
-					Long forecastId = Long
-							.parseLong(request.getParameter("id"));
+				if (requestFrom.equalsIgnoreCase("ActualEdit")) {
+					Long actualId = Long.parseLong(request.getParameter("id"));
+					ActualVO actualVO = actualBSO.getActualDetails(actualId);
+					request.setAttribute("actualVO", actualVO);
+					request.setAttribute("Path", "EditActual");
+				}
+				if (requestFrom.equalsIgnoreCase("IsActual")) {
+					Long forecastId = Long.parseLong(request
+							.getParameter("forecastId"));
+					boolean isActualPresent = actualBSO.getIsActual(forecastId);
 					ForecastVO forecastVO = forecastBSO
 							.getForecastDetails(forecastId);
 					request.setAttribute("forecastVO", forecastVO);
-					request.setAttribute("Path", "EditForecast");
+					if (isActualPresent) {
+						Long actualId = actualBSO
+								.getActualIdFromForecast(forecastId);
+						ActualVO actualVO = actualBSO
+								.getActualDetails(actualId);
+						request.setAttribute("actualVO", actualVO);
+						request.setAttribute("Path", "EditActual");
+					} else {
+						request.setAttribute("Path", "AddActual");
+					}
 				}
-				if (requestFrom.equalsIgnoreCase("forecastListFromProjectId")) {
-					List<ForecastVO> forecastVOs = forecastBSO
-							.getForecastList(request);
+				if (requestFrom.equalsIgnoreCase("actualListFromProjectId")) {
+					List<ActualVO> actualVOs = actualBSO.getActualList(request);
 					Map<Long, String> map = new HashMap<Long, String>();
-					for (ForecastVO forecastVO : forecastVOs)
-						map.put(forecastVO.getForecastId(),
-								forecastVO.getForecastName());
+					for (ActualVO actualVO : actualVOs)
+						map.put(actualVO.getActualId(),
+								actualVO.getActualName());
 					JSONObject jsonObject = new JSONObject(map);
 					response.setContentType("application/json");
 					// Get the printwriter object from response to write the
@@ -78,17 +96,15 @@ public class ForecastServlet extends HttpServlet {
 					out.print(jsonObject.toString());
 					out.flush();
 				}
-				if (requestFrom.equalsIgnoreCase("ForecastForCompare")) {
-					Long forecastId = Long.parseLong(request
-							.getParameter("forecastId"));
-					ForecastVO forecastVO = forecastBSO
-							.getForecastDetails(forecastId);
+				if (requestFrom.equalsIgnoreCase("actualForCompare")) {
+					Long actualId = Long.parseLong(request
+							.getParameter("actualId"));
+					ActualVO actualVO = actualBSO.getActualDetails(actualId);
 					Map<Integer, Double> map = new HashMap<Integer, Double>();
 					for (int index = 1; index <= 12; index++) {
-						if (forecastVO.getForecastData()[index] != null)
-							if (forecastVO.getForecastData()[index] != 0) {
-								map.put(index,
-										forecastVO.getForecastData()[index]);
+						if (actualVO.getActualData()[index] != null)
+							if (actualVO.getActualData()[index] != 0) {
+								map.put(index, actualVO.getActualData()[index]);
 							}
 					}
 					JSONObject jsonObject = new JSONObject(map);
@@ -113,13 +129,15 @@ public class ForecastServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		ActualBSO actualBSO = null;
 		ForecastBSO forecastBSO = null;
 		try {
+			actualBSO = new ActualBSOImpl();
 			forecastBSO = new ForecastBSOImpl();
 			String requestFrom = request.getParameter("requestFrom");
 			if (requestFrom != null) {
-				if (requestFrom.equalsIgnoreCase("AddForecast")) {
-					forecastBSO.addForecast(request);
+				if (requestFrom.equalsIgnoreCase("AddActual")) {
+					actualBSO.addActual(request);
 					List<ForecastVO> forecastVOs = forecastBSO
 							.getForecastList(request);
 					request.setAttribute("forecastList", forecastVOs);

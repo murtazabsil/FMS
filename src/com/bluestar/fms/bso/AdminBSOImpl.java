@@ -11,8 +11,10 @@ import com.bluestar.fms.dal.AdminDAOImpl;
 import com.bluestar.fms.entity.Account;
 import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Manager;
+import com.bluestar.fms.entity.Month;
 import com.bluestar.fms.entity.Project;
 import com.bluestar.fms.entity.ProjectManagerLink;
+import com.bluestar.fms.entity.User;
 import com.bluestar.fms.helper.AdminHelper;
 import com.bluestar.fms.util.PrintStackTraceLogger;
 import com.bluestar.fms.util.UserType;
@@ -24,6 +26,7 @@ import com.bluestar.fms.vo.LobVO;
 import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
+import com.bluestar.fms.vo.MonthVO;
 import com.bluestar.fms.vo.PriorityVO;
 import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
@@ -336,4 +339,112 @@ public class AdminBSOImpl implements AdminBSO {
 		return manager;
 	}
 
+	@Override
+	public List<MonthVO> getMonthList() {
+		List<MonthVO> listMonthVO = adminDAOImpl.getMonthList();
+		return listMonthVO;
+	}
+
+	@Override
+	public User getUserFromUserID(Long userId) {
+		// TODO Auto-generated method stub
+		AdminDAO adminDAO = null;
+		User user = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			user = adminDAO.getUserFromUserId(userId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return user;
+	}
+
+	@Override
+	public List<UserVO> getUserAccountHeadList() {
+		AdminDAO adminDAO = new AdminDAOImpl();
+		List<UserVO> userList = null;
+		try {
+			userList = adminDAO.getUserAccountHeadList();
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return userList;
+	}
+
+	@Override
+	public List<UserVO> getUserLobHeadList() {
+		AdminDAO adminDAO = new AdminDAOImpl();
+		List<UserVO> userList = null;
+		try {
+			userList = adminDAO.getUserLobHeadList();
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return userList;
+	}
+
+	@Override
+	public List<ProjectVO> getProjectVOListForAccount(Long accountHeadId) {
+		List<ProjectVO> projectVOList = null;
+		AdminDAO adminDAO = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			projectVOList = adminDAO.getProjectVOListForAccount(accountHeadId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectVOList;
+	}
+
+	@Override
+	public List<ManagerVO> getManagerListForAccount(Long accountHeadId) {
+		List<ManagerVO> managerVOList = null;
+		AdminDAO adminDAO = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			managerVOList = adminDAO.getManagerListForAccount(accountHeadId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return managerVOList;
+	}
+
+	@Override
+	public List<ProjectVO> getProjectVOListForLob(Long lobHeadId) {
+		List<ProjectVO> projectVOList = null;
+		AdminDAO adminDAO = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			projectVOList = adminDAO.getProjectVOListForLob(lobHeadId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectVOList;
+	}
+
+	@Override
+	public List<ManagerVO> getManagerVOListForLob(Long lobHeadId) {
+		List<ManagerVO> managerVOList = null;
+		AdminDAO adminDAO = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			managerVOList = adminDAO.getManagerListForLob(lobHeadId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return managerVOList;
+	}
+
+	@Override
+	public List<AccountVO> getAccountVOListForLob(Long lobHeadId) {
+		List<AccountVO> accountVOList = null;
+		AdminDAO adminDAO = null;
+		try {
+			adminDAO = new AdminDAOImpl();
+			accountVOList = adminDAO.getAccountVOListForLob(lobHeadId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return accountVOList;
+	}
 }

@@ -62,17 +62,19 @@ public class Forecast implements Serializable {
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdOn;
+    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
+    @ManyToOne(optional = false)
+    private Project projectId;
     @JoinColumn(name = "forecast_month", referencedColumnName = "month_id")
     @ManyToOne(optional = false)
     private Month forecastMonth;
     @JoinColumn(name = "created_by", referencedColumnName = "manager_id")
     @ManyToOne(optional = false)
     private Manager createdBy;
-    @JoinColumn(name = "project_id", referencedColumnName = "project_id")
-    @ManyToOne(optional = false)
-    private Project projectId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastId")
     private Collection<ForecastDetail> forecastDetailCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "forecastId")
+    private Collection<Actual> actualCollection;
 
     public Forecast() {
     }
@@ -120,6 +122,14 @@ public class Forecast implements Serializable {
         this.createdOn = createdOn;
     }
 
+    public Project getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Project projectId) {
+        this.projectId = projectId;
+    }
+
     public Month getForecastMonth() {
         return forecastMonth;
     }
@@ -136,14 +146,6 @@ public class Forecast implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Project getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Project projectId) {
-        this.projectId = projectId;
-    }
-
     @XmlTransient
     public Collection<ForecastDetail> getForecastDetailCollection() {
         return forecastDetailCollection;
@@ -151,6 +153,15 @@ public class Forecast implements Serializable {
 
     public void setForecastDetailCollection(Collection<ForecastDetail> forecastDetailCollection) {
         this.forecastDetailCollection = forecastDetailCollection;
+    }
+
+    @XmlTransient
+    public Collection<Actual> getActualCollection() {
+        return actualCollection;
+    }
+
+    public void setActualCollection(Collection<Actual> actualCollection) {
+        this.actualCollection = actualCollection;
     }
 
     @Override

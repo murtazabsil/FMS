@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Lob.findAll", query = "SELECT l FROM Lob l"),
     @NamedQuery(name = "Lob.findByLobId", query = "SELECT l FROM Lob l WHERE l.lobId = :lobId"),
     @NamedQuery(name = "Lob.findByLobName", query = "SELECT l FROM Lob l WHERE l.lobName = :lobName"),
-    @NamedQuery(name = "Lob.findByLobHead", query = "SELECT l FROM Lob l WHERE l.lobHead = :lobHead"),
     @NamedQuery(name = "Lob.findByLobDesc", query = "SELECT l FROM Lob l WHERE l.lobDesc = :lobDesc")})
 public class Lob implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -47,14 +46,14 @@ public class Lob implements Serializable {
     @Size(max = 64)
     @Column(name = "lob_name")
     private String lobName;
-    @Size(max = 64)
-    @Column(name = "lob_head")
-    private String lobHead;
     @Size(max = 255)
     @Column(name = "lob_desc")
     private String lobDesc;
     @OneToMany(mappedBy = "managerLobId")
     private Collection<Manager> managerCollection;
+    @JoinColumn(name = "lob_head", referencedColumnName = "regid")
+    @ManyToOne
+    private User lobHead;
     @JoinColumn(name = "lob_location", referencedColumnName = "location_id")
     @ManyToOne
     private Location lobLocation;
@@ -86,14 +85,6 @@ public class Lob implements Serializable {
         this.lobName = lobName;
     }
 
-    public String getLobHead() {
-        return lobHead;
-    }
-
-    public void setLobHead(String lobHead) {
-        this.lobHead = lobHead;
-    }
-
     public String getLobDesc() {
         return lobDesc;
     }
@@ -109,6 +100,14 @@ public class Lob implements Serializable {
 
     public void setManagerCollection(Collection<Manager> managerCollection) {
         this.managerCollection = managerCollection;
+    }
+
+    public User getLobHead() {
+        return lobHead;
+    }
+
+    public void setLobHead(User lobHead) {
+        this.lobHead = lobHead;
     }
 
     public Location getLobLocation() {

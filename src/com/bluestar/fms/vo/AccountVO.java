@@ -26,8 +26,12 @@ public class AccountVO implements Serializable {
     private String accountClient;
    
     private BigInteger accountLocation;
+    
+    private String accountLocationName;
    
-    private String accountHead;
+    private Long accountHeadId;
+    
+    private String accountHeadName;
    
     private String accountDesc;
 
@@ -80,14 +84,6 @@ public class AccountVO implements Serializable {
         this.accountLocation = accountLocation;
     }
 
-    public String getAccountHead() {
-        return accountHead;
-    }
-
-    public void setAccountHead(String accountHead) {
-        this.accountHead = accountHead;
-    }
-
     public String getAccountDesc() {
         return accountDesc;
     }
@@ -96,5 +92,27 @@ public class AccountVO implements Serializable {
         this.accountDesc = accountDesc;
     }
 
-   
+	public Long getAccountHeadId() {
+		return accountHeadId;
+	}
+
+	public void setAccountHeadId(Long accountHeadId) {
+		this.accountHeadId = accountHeadId;
+	}
+
+	public String getAccountHeadName() {
+		return accountHeadName;
+	}
+
+	public void setAccountHeadName(String accountHeadName) {
+		this.accountHeadName = accountHeadName;
+	}
+
+	public String getAccountLocationName() {
+		return accountLocationName;
+	}
+
+	public void setAccountLocationName(String accountLocationName) {
+		this.accountLocationName = accountLocationName;
+	}
 }

@@ -17,9 +17,9 @@
 	<%
 		AdminBSO adminBSO = new AdminBSOImpl();
 		try {
-			List<ProjectVO> projectList = adminBSO.getProjectList(
-					(Long) session.getAttribute("userType"),
-					(Long) session.getAttribute("userRegId"));
+			List<ProjectVO> projectList = adminBSO
+					.getProjectVOListForLob((Long) session
+							.getAttribute("userRegId"));
 			request.setAttribute("projectList", projectList);
 		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
@@ -30,12 +30,6 @@
 			<h2>Project List</h2>
 		</div>
 
-		<!-- <div id="add-button">
-			<a href="AddProject.jsp"> <span
-				style="background-color: #565656; padding: 7px; color: white;">Add
-					New Project</span>
-			</a>
-		</div> -->
 		<div class="table-responsive">
 			<table id="project-list-table" class="table">
 				<thead>

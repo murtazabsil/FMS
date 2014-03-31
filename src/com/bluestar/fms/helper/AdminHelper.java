@@ -33,8 +33,9 @@ public class AdminHelper {
 		// priority
 		// projectStatus projectType startdate enddate projectDesc
 		try {
-			if ((request.getParameter("id") != null))
-				projectVO.setProjectId(new Long(request.getParameter("id")));
+			if ((request.getParameter("projectId") != null))
+				projectVO.setProjectId(new Long(request
+						.getParameter("projectId")));
 			projectVO.setProjectName(request.getParameter("projectName"));
 			projectVO.setProjectDesc(request.getParameter("projectDesc"));
 			projectVO.setProjectLob(new BigInteger(request
@@ -71,6 +72,9 @@ public class AdminHelper {
 
 		ManagerVO managerVO = new ManagerVO();
 
+		if ((request.getParameter("managerId") != null))
+			managerVO.setManagerId(new Long(request.getParameter("managerId")));
+
 		// pmEmpId pmdepartment pmlob pmaccount pmlocation pmcurrency pmdesc
 		managerVO.setManagerName(request.getParameter("pmName"));
 		managerVO.setManagerDescrition(request.getParameter("pmdesc"));
@@ -93,9 +97,11 @@ public class AdminHelper {
 	public static AccountVO convertRequestToAccountVO(HttpServletRequest request) {
 
 		AccountVO accountVO = new AccountVO();
-		;
 		// accountlob accountClient accountlocation accountHead
 		// accountDescription
+		if ((request.getParameter("accountId") != null))
+			accountVO.setAccountId(new Long(request.getParameter("accountId")));
+
 		accountVO.setAccountName(request.getParameter("accountName"));
 		accountVO.setAccountDesc(request.getParameter("accountDescription"));
 		accountVO.setAccountLob(new BigInteger(request
@@ -103,19 +109,21 @@ public class AdminHelper {
 		accountVO.setAccountLocation(new BigInteger(request
 				.getParameter("accountlocation")));
 		accountVO.setAccountClient(request.getParameter("accountClient"));
-		accountVO.setAccountHead(request.getParameter("accountHead"));
+		accountVO.setAccountHeadId(Long.parseLong(request
+				.getParameter("accountHead")));
 
 		return accountVO;
 	}
 
 	public static LobVO convertRequestToLobVO(HttpServletRequest request) {
 		LobVO lobVO = new LobVO();
-		;
 		// lobName loblocation lobHead lobdesc
+		if ((request.getParameter("lobId") != null))
+			lobVO.setLobId(new Long(request.getParameter("lobId")));
 		lobVO.setLobName(request.getParameter("lobName"));
-		lobVO.setLobDesc(request.getParameter("lobName"));
+		lobVO.setLobDesc(request.getParameter("lobdesc"));
 		lobVO.setLobLocation(new BigInteger(request.getParameter("loblocation")));
-		lobVO.setLobHead(request.getParameter("lobHead"));
+		lobVO.setLobHeadId(Long.parseLong(request.getParameter("lobHead")));
 
 		return lobVO;
 	}

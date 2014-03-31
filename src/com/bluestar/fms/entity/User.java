@@ -6,6 +6,7 @@ package com.bluestar.fms.entity;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,10 +17,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -78,6 +81,10 @@ public class User implements Serializable {
     @Size(max = 20)
     @Column(name = "contactnumber")
     private String contactnumber;
+    @OneToMany(mappedBy = "lobHead")
+    private Collection<Lob> lobCollection;
+    @OneToMany(mappedBy = "accountHead")
+    private Collection<Account> accountCollection;
     @JoinColumn(name = "user_type", referencedColumnName = "user_type_id")
     @ManyToOne
     private UserType userType;
@@ -173,6 +180,24 @@ public class User implements Serializable {
 
     public void setContactnumber(String contactnumber) {
         this.contactnumber = contactnumber;
+    }
+
+    @XmlTransient
+    public Collection<Lob> getLobCollection() {
+        return lobCollection;
+    }
+
+    public void setLobCollection(Collection<Lob> lobCollection) {
+        this.lobCollection = lobCollection;
+    }
+
+    @XmlTransient
+    public Collection<Account> getAccountCollection() {
+        return accountCollection;
+    }
+
+    public void setAccountCollection(Collection<Account> accountCollection) {
+        this.accountCollection = accountCollection;
     }
 
     public UserType getUserType() {

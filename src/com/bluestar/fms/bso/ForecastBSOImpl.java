@@ -47,7 +47,6 @@ public class ForecastBSOImpl implements ForecastBSO {
 		try {
 			forecastDAO = new ForecastDAOImpl();
 			Long projectId = 0l;
-			Long createdBy = 0l;
 			if (request.getParameter("projectId") != null
 					&& !"".equals(request.getParameter("projectId")))
 				projectId = Long.parseLong(request.getParameter("projectId"));
@@ -72,6 +71,35 @@ public class ForecastBSOImpl implements ForecastBSO {
 		ForecastDAO forecastDAO = new ForecastDAOImpl();
 		Manager manager = forecastDAO.getManagerById(managerId);
 		return manager;
+	}
+
+	@Override
+	public ForecastVO getForecastDetails(Long forecastId) {
+		// TODO Auto-generated method stub
+		ForecastDAO forecastDAO = null;
+		ForecastVO forecastVO = null;
+		try {
+			forecastDAO = new ForecastDAOImpl();
+			Forecast forecast = forecastDAO.getForecastDetails(forecastId);
+			forecastVO = ForecastUtil.getForecastVOFromForecast(forecast);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return forecastVO;
+	}
+
+	@Override
+	public Forecast getForecastEntity(Long forecastId) {
+		// TODO Auto-generated method stub
+		Forecast forecast = null;
+		ForecastDAO forecastDAO = null;
+		try {
+			forecastDAO = new ForecastDAOImpl();
+			forecast = forecastDAO.getForecastEntity(forecastId);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return forecast;
 	}
 
 }

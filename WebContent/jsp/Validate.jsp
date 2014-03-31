@@ -31,36 +31,7 @@
 			session.setAttribute("userId", userId);
 			session.setAttribute("auth", new Integer(auth));
 			System.out.println("auth 2" + auth);
-			if (auth != null && auth.equals("3")) {
-
-				if (memberType != null && memberType == 2) {
-					System.out.println("auth" + auth);
-	%>
-	<jsp:forward page="BlockUser.jsp" />
-	<%
-		}
-				if (appStr == 0) {
-					System.out.println("app==0");
-	%>
-	<jsp:forward page="reqprocess.jsp" />
-	<%
-		}
-				if (appStr == -1) {
-					System.out.println("app==-1");
-	%>
-	<jsp:forward page="reqreject.jsp" />
-	<%
-		}
-	%>
-	<jsp:forward page="GuestMenu.jsp" />
-	<%
-		} else if (auth.equals("1")) {
-				//Show Admin Menu
-	%>
-	<jsp:forward page="AdminMenu.jsp" />
-	<%
-		} else if (auth.equals("2")) {
-				//Show Admin Menu
+			if (auth != null) {
 	%>
 	<jsp:forward page="AdminMenu.jsp" />
 	<%

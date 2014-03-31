@@ -48,6 +48,8 @@
 		<mapping class="com.bluestar.fms.entity.ProjectManagerLink" />
 		<mapping class="com.bluestar.fms.entity.Forecast" />
 		<mapping class="com.bluestar.fms.entity.ForecastDetail" />
+		<mapping class="com.bluestar.fms.entity.Actual" />
+		<mapping class="com.bluestar.fms.entity.ActualDetail" />
 		<mapping class="com.bluestar.fms.entity.Month" />
 			</session-factory>
 </hibernate-configuration>

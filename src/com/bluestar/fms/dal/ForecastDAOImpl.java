@@ -48,7 +48,7 @@ public class ForecastDAOImpl implements ForecastDAO {
 			daoManager = new DAOManager(session);
 			transaction = session.getTransaction();
 			transaction.begin();
-			daoManager.create(forecast);
+			daoManager.createOrUpdate(forecast);
 			transaction.commit();
 		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
@@ -114,6 +114,40 @@ public class ForecastDAOImpl implements ForecastDAO {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return manager;
+	}
+
+	@Override
+	public Forecast getForecastDetails(Long forecastId) {
+		// TODO Auto-generated method stub
+		Forecast forecast = null;
+		Session session = null;
+		DAOManager daoManager = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			forecast = daoManager.find(forecastId, "Forecast");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return forecast;
+	}
+
+	@Override
+	public Forecast getForecastEntity(Long forecastId) {
+		// TODO Auto-generated method stub
+		Forecast forecast = null;
+		Session session = null;
+		DAOManager daoManager = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			forecast = daoManager.find(forecastId, "Forecast");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return forecast;
 	}
 
 }

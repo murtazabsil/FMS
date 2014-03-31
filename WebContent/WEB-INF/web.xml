@@ -49,12 +49,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ActualsServlet</display-name>
-    <servlet-name>ActualsServlet</servlet-name>
-    <servlet-class>com.bluestar.fms.servlet.ActualsServlet</servlet-class>
+    <display-name>ActualServlet</display-name>
+    <servlet-name>ActualServlet</servlet-name>
+    <servlet-class>com.bluestar.fms.servlet.ActualServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ActualsServlet</servlet-name>
-    <url-pattern>/ActualsServlet</url-pattern>
+    <servlet-name>ActualServlet</servlet-name>
+    <url-pattern>/ActualServlet</url-pattern>
   </servlet-mapping>
 </web-app>

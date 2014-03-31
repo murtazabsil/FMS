@@ -1,4 +1,5 @@
 
+<%@page import="com.bluestar.fms.vo.UserVO"%>
 <%@ page language="java"%>
 <%@ page session="true"%>
 <%@ page
@@ -21,10 +22,13 @@
 <%
 	Map<String, List<String>> dropDownListMap = new HashMap<String, List<String>>();
 	AdminBSO adminBSO = new AdminBSOImpl();
+	List<UserVO> userVOList = null;
 	try {
 		dropDownListMap.putAll(adminBSO.initializeDropDown());
 		dropDownListMap.putAll(adminBSO.initializeModuleDropDown());
 		request.setAttribute("dropDownListMap", dropDownListMap);
+		userVOList = adminBSO.getUserLobHeadList();
+		request.setAttribute("userVOList", userVOList);
 		String error = (String) request.getAttribute("error");
 	} catch (Exception exception) {
 		PrintStackTraceLogger.getStackTrace(exception);
@@ -80,8 +84,20 @@
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'> LOB Head </FONT><FONT COLOR="red">*</FONT></TD>
-					<TD colspan=2 align=left><Input type=text name='lobHead'
-						value='' maxlength='10'></TD>
+					<TD colspan=2 align=left>
+					<% if(userVOList.size() > 0) {%>
+					<Select id="lobHead"
+						name='lobHead' value="" maxlength='10'>
+							<option value="">Select</option>
+							<c:forEach items="${userVOList}" var="user">
+							<option value="${user.regID}">${user.firstName} ${user.lastName}</option>
+							</c:forEach>
+					</Select></TD>
+					<% } else { %>
+						<span style="color: red;">Please create a user with type as Account head to Proceed.</span><br>
+						<span>Follow link to create user : </span><a href="AddUser.jsp">Add New User</a>
+					<% } %>
+					</TD>
 				</tr>
 
 
@@ -95,7 +111,7 @@
 
 
 				<tr class=row_odd>
-					<TH colspan=1><INPUT class="sitewide-button" TYPE="submit"
+					<TH colspan=1><INPUT <%if(userVOList.size() == 0){ %> disabled="disabled" <%} %> class="sitewide-button" TYPE="submit"
 						id="lob" onClick="return validate(this)" value='Add'></TH>
 					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset"
 						value='Clear'></TH>

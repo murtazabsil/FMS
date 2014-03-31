@@ -13,6 +13,7 @@ import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Location;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Module;
+import com.bluestar.fms.entity.Month;
 import com.bluestar.fms.entity.Priority;
 import com.bluestar.fms.entity.Project;
 import com.bluestar.fms.entity.ProjectManagerLink;
@@ -26,6 +27,7 @@ import com.bluestar.fms.vo.LobVO;
 import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
+import com.bluestar.fms.vo.MonthVO;
 import com.bluestar.fms.vo.PriorityVO;
 import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
@@ -105,15 +107,13 @@ public class AdminUtil {
 	public static Lob convertLobVOtoEntity(LobVO lobVO) {
 
 		Lob lob = null;
-
+		AdminBSO adminBSO = new AdminBSOImpl();
 		if (lobVO != null) {
 			lob = new Lob();
 			lob.setLobId(lobVO.getLobId());
 			lob.setLobName(lobVO.getLobName());
-
 			lob.setLobDesc(lobVO.getLobDesc());
-			lob.setLobHead(lobVO.getLobHead());
-
+			lob.setLobHead(adminBSO.getUserFromUserID(lobVO.getLobHeadId()));
 			Location location = new Location();
 			location.setLocationId(converBigItegerToLong(lobVO.getLobLocation()));
 			lob.setLobLocation(location);
@@ -124,14 +124,15 @@ public class AdminUtil {
 
 	public static Account convertAccountVOtoEntity(AccountVO accountVO) {
 		Account account = null;
-
+		AdminBSO adminBSO = new AdminBSOImpl();
 		if (accountVO != null) {
 			account = new Account();
 			account.setAccountId(accountVO.getAccountId());
 			account.setAccountName(accountVO.getAccountName());
 
 			account.setAccountDesc(accountVO.getAccountDesc());
-			account.setAccountHead(accountVO.getAccountHead());
+			account.setAccountHead(adminBSO.getUserFromUserID(accountVO
+					.getAccountHeadId()));
 			Location location = new Location();
 			location.setLocationId(converBigItegerToLong(accountVO
 					.getAccountLocation()));
@@ -298,9 +299,12 @@ public class AdminUtil {
 			accountVO.setAccountName(account.getAccountName());
 
 			accountVO.setAccountDesc(account.getAccountDesc());
-			accountVO.setAccountHead(account.getAccountHead());
+			accountVO.setAccountHeadId(account.getAccountHead().getRegid());
+			accountVO.setAccountHeadName(account.getAccountHead()
+					.getFirstName());
 			accountVO.setAccountLocation(converLongToBigInteger(account
 					.getAccountLocation().getLocationId()));
+			accountVO.setAccountLocationName(account.getAccountLocation().getLocationName());
 			accountVO.setAccountClient(account.getAccountClient());
 			accountVO.setAccountLob(converLongToBigInteger(account
 					.getAccountLob().getLobId()));
@@ -367,9 +371,11 @@ public class AdminUtil {
 			lobVO.setLobName(lob.getLobName());
 
 			lobVO.setLobDesc(lob.getLobDesc());
-			lobVO.setLobHead(lob.getLobHead());
+			lobVO.setLobHeadId(lob.getLobHead().getRegid());
+			lobVO.setLobHeadName(lob.getLobHead().getFirstName());
 			lobVO.setLobLocation(converLongToBigInteger(lob.getLobLocation()
 					.getLocationId()));
+			lobVO.setLobLocationName(lob.getLobLocation().getLocationName());
 		}
 
 		return lobVO;
@@ -392,29 +398,18 @@ public class AdminUtil {
 		UserVO userVO = null;
 		// System.out.println("start convertUserEntityToVO");
 		if (user != null) {
-			// System.out.println("in convertUserEntityToVO user not null");
 			userVO = new UserVO();
-			/*
-			 * LoginVO loginVO = new LoginVO();
-			 * loginVO.setId(user.getLogin().getId());
-			 * loginVO.setPassword(user.getLogin().getPassword());
-			 * loginVO.setUserID(user.getLogin().getUserID());
-			 * loginVO.setUserType(user.getLogin().getUserType().getUserTypeId()
-			 * .intValue()); userVO.setLoginVO(loginVO);
-			 */
-
 			userVO.setRegID(user.getRegid());
 			userVO.setUserName(user.getUserid());
 			userVO.setFirstName(user.getFirstName());
 			userVO.setLastName(user.getLastName());
 			userVO.setAddress(user.getAddress());
 			userVO.setContactNumber(user.getContactnumber());
-			userVO.setDesignation(new Integer(user.getDesignation() + ""));
+			userVO.setDesignation(user.getDesignation().intValue());
 			userVO.setEmailAddress(user.getEmailaddress());
 			userVO.setEmpId(user.getEmpid());
 			userVO.setUserType(user.getUserType().getUserTypeId());
 			userVO.setUserTypeName(user.getUserType().getUserType());
-			userVO.setDesignation(new Integer(user.getDesignation() + ""));
 		}
 		// System.out.println("end convertUserEntityToVO user not null");
 		return userVO;
@@ -705,6 +700,23 @@ public class AdminUtil {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return projectManagerLink;
+	}
+
+	public static List<MonthVO> getMonthVOListFromEntityList(
+			List<Month> listMonth) {
+		List<MonthVO> monthVOList = null;
+		try {
+			monthVOList = new ArrayList<MonthVO>();
+			for (Month month : listMonth) {
+				MonthVO monthVO = new MonthVO();
+				monthVO.setMonthId(month.getMonthId());
+				monthVO.setMonthName(month.getMonthName());
+				monthVOList.add(monthVO);
+			}
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return monthVOList;
 	}
 
 }

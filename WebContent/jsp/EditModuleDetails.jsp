@@ -1,28 +1,20 @@
+<%@page import="com.bluestar.fms.bso.AdminBSOImpl"%>
+<%@page import="com.bluestar.fms.bso.AdminBSO"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java"%>
 <%@ page session="true"%>
 <%@ page
 	import="java.sql.*,java.io.*,com.eResorts.MyFunctions,com.bluestar.fms.vo.*,java.util.*;"%>
-<%			String Condition = "MuduleName";
+<%
+	String Condition = "MuduleName";
 %>
 
 <HTML>
 <HEAD>
-<TITLE>Accommodation</TITLE>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
-
-<script language="javascript" type="text/javascript"
-	src="scripts/datetimepicker.js"></script>
-
-<script type="text/javascript" src="scripts/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="scripts/jquery-1.8.0.min.js"></script>
-<script src="scripts/jquery-ui.js"></script>
-<script LANGUAGE="Javascript" SRC="scripts/validation.js"></script>
-
-<SCRIPT LANGUAGE="JavaScript">		
-
-
-
+<script LANGUAGE="Javascript"
+	SRC="<%=request.getContextPath()%>/Images/validate.js"></script>
+<script type="text/javascript">		
 function validate(O){
 	
 		
@@ -153,8 +145,7 @@ $(document).ready(function(){
     // $("#accountdiv").hide();
     // $("#lobdiv").hide();
      
-	    var selection =  "<%=request.getAttribute("event")%>
-	";
+	    var selection =  "<%=request.getAttribute("event")%>";
 		//   alert('selection '+selection);
 		if (selection == '1') {
 			//   alert('inside project hide');
@@ -195,55 +186,73 @@ $(document).ready(function(){
 
 <BODY Class='SC'>
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#startdate").datepicker({
+			showOn : "button",
+			buttonImage : "<%=request.getContextPath()%>/Images/cal.gif",
+			buttonImageOnly : true
+		});
+		$("#enddate").datepicker({
+			showOn : "button",
+			buttonImage : "<%=request.getContextPath()%>
+		/Images/cal.gif",
+				buttonImageOnly : true
+			});
+		});
+	</script>
 	<%
 		Map<String, List<String>> dropDownListMap = (Map<String, List<String>>) request
-				.getAttribute("dropDownListMap");
-		System.out.println(" dropDownListMap ------------"
-				+ dropDownListMap.toString());
+			.getAttribute("dropDownListMap");
+			System.out.println(" dropDownListMap ------------"
+			+ dropDownListMap.toString());
 
-		String event = (String) request.getAttribute("event");
-		System.out.println(" event  in edit jsp------------" + event);
-		ProjectVO projectVO = null;
-		AccountVO accountVO = null;
-		LobVO lobVO = null;
-		ManagerVO managerVO = null;
-		Long id = null;
-		if (event != null && event.equals("1")) {
-			projectVO = (ProjectVO) request.getAttribute("detail");
-			out.print("<div id='page-title'><h2>Edit Project</h2></div>");
-			if (projectVO != null) {
-				id = projectVO.getProjectId();
-			}
-		} else if (event != null && event.equals("3")) {
-			accountVO = (AccountVO) request.getAttribute("detail");
-			out.print("<div id='page-title'><h2>Edit Accout</h2></div>");
-			if (accountVO != null) {
-				id = accountVO.getAccountId();
-			}
-		} else if (event != null && event.equals("4")) {
-			lobVO = (LobVO) request.getAttribute("detail");
-			out.print("<div id='page-title'><h2>Edit Lob</h2></div>");
-			if (lobVO != null) {
-				id = lobVO.getLobId();
-			}
-		} else if (event != null && event.equals("2")) {
-			managerVO = (ManagerVO) request.getAttribute("detail");
-			out.print("<div id='page-title'><h2>Edit Manager</h2></div>");
-			if (managerVO != null) {
-				id = managerVO.getManagerId();
-			}
+			String event = (String) request.getAttribute("event");
+			System.out.println(" event  in edit jsp------------" + event);
+			ProjectVO projectVO = null;
+			AccountVO accountVO = null;
+			LobVO lobVO = null;
+			ManagerVO managerVO = null;
+			Long id = null;
+			if (event != null && event.equals("1")) {
+		projectVO = (ProjectVO) request.getAttribute("detail");
+		out.print("<div id='page-title'><h2>Edit Project</h2></div>");
+		if (projectVO != null) {
+			id = projectVO.getProjectId();
 		}
+			} else if (event != null && event.equals("3")) {
+		accountVO = (AccountVO) request.getAttribute("detail");
+		out.print("<div id='page-title'><h2>Edit Accout</h2></div>");
+		if (accountVO != null) {
+			id = accountVO.getAccountId();
+		}
+			} else if (event != null && event.equals("4")) {
+		lobVO = (LobVO) request.getAttribute("detail");
+		out.print("<div id='page-title'><h2>Edit Lob</h2></div>");
+		if (lobVO != null) {
+			id = lobVO.getLobId();
+		}
+			} else if (event != null && event.equals("2")) {
+		managerVO = (ManagerVO) request.getAttribute("detail");
+		out.print("<div id='page-title'><h2>Edit Manager</h2></div>");
+		if (managerVO != null) {
+			id = managerVO.getManagerId();
+		}
+			}
 	%>
 
-	<FORM Name='Accommodation' Id="Accommodation" method="Get">
+	<FORM Name='Accommodation' Id="Accommodation"
+		action="<%=request.getContextPath()%>/Admin" method="POST">
+		<input type="hidden" value="edit" name="action">
 		<%
 			if (event != null && event.equals("1")) {
 				System.out.println(" in ifff after projectVO------------"
 						+ projectVO.getProjectName());
 		%>
-
+		<title>Edit Project</title>
 		<div id="projectdiv">
-
+			<input type="hidden" value="project" name="module"> <input
+				type="hidden" value="<%=projectVO.getProjectId()%>" name="projectId">
 			<TABLE id="project" width="30%" class="notepad" align="center">
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
@@ -260,12 +269,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("lobList");
-										System.out.println("111 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("lobList");
+																									System.out.println("111 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectLob() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectLob() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -275,7 +284,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -293,12 +302,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("accountList");
-										System.out.println("222 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("accountList");
+																									System.out.println("222 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectAccount() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectAccount() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -308,7 +317,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -327,12 +336,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("currencyList");
-										System.out.println("444 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("currencyList");
+																									System.out.println("444 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectBaseCurrency() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectBaseCurrency() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -342,7 +351,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -359,12 +368,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("priorityList");
-										System.out.println("555 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("priorityList");
+																									System.out.println("555 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectPriority() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectPriority() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -374,7 +383,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -393,12 +402,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("statusList");
-										System.out.println("666 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("statusList");
+																									System.out.println("666 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectStatus() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectStatus() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -408,7 +417,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -428,12 +437,12 @@ $(document).ready(function(){
 							<OPTION Value="">Select</OPTION>
 							<%
 								try {
-										List<String> list = dropDownListMap.get("typeList");
-										System.out.println("77 list-----------" + list.toString());
-										for (String str : list) {
+																									List<String> list = dropDownListMap.get("typeList");
+																									System.out.println("77 list-----------" + list.toString());
+																									for (String str : list) {
 
-											if (str.substring(0, str.lastIndexOf("|")).equals(
-													projectVO.getProjectType() + "")) {
+																										if (str.substring(0, str.lastIndexOf("|")).equals(
+																												projectVO.getProjectType() + "")) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -443,7 +452,7 @@ $(document).ready(function(){
 							<OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
 								}
-									} catch (Exception e) {
+																								} catch (Exception e) {
 							%><%=e%>
 							<%
 								}
@@ -463,11 +472,12 @@ $(document).ready(function(){
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!--  <input type="text" id="startdatepicker" /> -->
-							<% SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy"); %>
-							<input name="startdate" id="startdate" type="text" size="15" value="<%=dateFormat.format(projectVO.getStartDate())%>"><a
-								href="javascript:NewCal('startdate','ddmmyyyy')"><img
-								src="Images/cal.gif" width="16" height="16" border="0"
-								alt="Pick a date"> </a>
+							<%
+								SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+							%>
+							<input name="startdate" id="startdate" type="text" size="15"
+								value=<%if (projectVO.getStartDate() != null)%>
+								<%=dateFormat.format(projectVO.getStartDate())%>>
 						</p></TD>
 				</TR>
 				<tr class=row_even>
@@ -476,10 +486,9 @@ $(document).ready(function(){
 						COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><p>
 							<!-- <input type="text" id="enddatepicker" /> -->
-							<input name="enddate" id="enddate" type="text" size="15" value="<%=dateFormat.format(projectVO.getEndDate())%>"><a
-								href="javascript:NewCal('enddate','ddmmyyyy')"><img
-								src="Images/cal.gif" width="16" height="16" border="0"
-								alt="Pick a date"> </a>
+							<input name="enddate" id="enddate" type="text" size="15"
+								value=<%if (projectVO.getEndDate() != null)%>
+								<%=dateFormat.format(projectVO.getEndDate())%>>
 						</p></TD>
 				</TR>
 
@@ -489,15 +498,14 @@ $(document).ready(function(){
 					<TD colspan=2 align=left><textarea name='projectDesc'
 							ROWS="5
 							COLS="
-							50" value="<%=projectVO.getProjectDesc()%>"
-							style="width: 360px;"></textarea></TD>
+							50" value="<%=projectVO.getProjectDesc()%>" style="width: 360px;"></textarea></TD>
 
 				</tr>
 
 
 				<tr class=row_odd>
 					<TH colspan=1><INPUT TYPE="submit" id="project"
-						onClick="return validate(this)"	value='Add'></TH>
+						onClick="return validate(this)" value='Add'></TH>
 					<TH colspan=2><INPUT TYPE="reset" value='Clear'></TH>
 				</TR>
 			</TABLE>
@@ -505,21 +513,22 @@ $(document).ready(function(){
 		<%
 			} else if (event != null && event.equals("2")) {
 		%>
+		<title>Edit Manager</title>
 		<div id="pmdiv">
+			<input type="hidden" value="manager" name="module"> <input
+				type="hidden" value="<%=managerVO.getManagerId()%>" name="managerId">
 			<TABLE id="pm" width="30%" class="notepad" align="center">
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'>Name</FONT><FONT COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><Input type=text name="pmName"
-						value='<%=managerVO.getManagerName()%>' maxlength="64"> </Input>
-					</TD>
+						value='<%=managerVO.getManagerName()%>' maxlength="64"> </Input></TD>
 				</tr>
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'>Employee Id</FONT><FONT COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><Input type=text name="pmEmpId"
-						value='<%=managerVO.getManagerEmpId()%>' maxlength="10">
-						</Input></TD>
+						value='<%=managerVO.getManagerEmpId()%>' maxlength="10"> </Input></TD>
 				</tr>
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
@@ -533,6 +542,14 @@ $(document).ready(function(){
 							<OPTION Value="4">SAAS</OPTION>
 
 					</SELECT></TD>
+					<script type="text/javascript">
+						$(document).ready(
+								function() {
+									$('#pmdepartment').val(
+					<%=managerVO.getManagerDeptId()%>
+						);
+								});
+					</script>
 				</tr>
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
@@ -546,7 +563,7 @@ $(document).ready(function(){
 										for (String str : list) {
 
 											if (str.substring(0, str.lastIndexOf("|")).equals(
-													managerVO.getManagerLobId())) {
+													managerVO.getManagerLobId().toString())) {
 							%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 								selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 							<%
@@ -670,8 +687,7 @@ $(document).ready(function(){
 					<TD align="left" valign='top'><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'>Comments<FONT COLOR="red">*</FONT></TD>
 					<TD colspan='2' align='left'><textarea name='pmdesc' ROWS="5"
-							COLS="50"
-							value='<%=managerVO.getManagerDescrition()%>></textarea>'></textarea>
+							COLS="50"><%=managerVO.getManagerDescrition()%></textarea>
 					</TD>
 
 				</tr>
@@ -687,8 +703,14 @@ $(document).ready(function(){
 		<%
 			} else if (event != null && event.equals("3")) {
 		%>
-
+		<%
+			AdminBSO adminBSO = new AdminBSOImpl();
+				List<UserVO> userVOList = adminBSO.getUserAccountHeadList();
+		%>
+		<title>Edit Account</title>
 		<div id="accountdiv">
+			<input type="hidden" value="account" name="module"> <input
+				type="hidden" value="<%=accountVO.getAccountId()%>" name="accountId">
 			<TABLE id="account" width="30%" class="notepad" align="center">
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
@@ -775,8 +797,29 @@ $(document).ready(function(){
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'> Account Head </FONT><FONT COLOR="red">*</FONT></TD>
-					<TD colspan=2 align=left><Input type=text name='accountHead'
-						value="<%=accountVO.getAccountHead()%>" maxlength='10'></TD>
+					<TD colspan=2 align=left><Select id="accountHead"
+						name='accountHead' maxlength='10'>
+							<option value="0">Select</option>
+							<%
+								for (UserVO userVO : userVOList) {
+							%>
+							<%
+								if (userVO.getRegID() == accountVO.getAccountHeadId()) {
+							%>
+							<option selected="selected" value=<%=userVO.getRegID()%>><%=userVO.getFirstName()%>
+								<%=userVO.getLastName()%></option>
+							<%
+								} else {
+							%>
+							<option value=<%=userVO.getRegID()%>><%=userVO.getFirstName()%>
+								<%=userVO.getLastName()%></option>
+							<%
+								}
+							%>
+							<%
+								}
+							%>
+					</Select></TD>
 				</tr>
 
 
@@ -784,8 +827,7 @@ $(document).ready(function(){
 					<TD align="left"><FONT SIZE="2" COLOR="#AA2504" face='verdana'>Account
 							Description </TD>
 					<TD colspan='2' align='left'><textarea
-							name='accountDescription' ROWS="5" COLS="50"
-							value='<%=accountVO.getAccountDesc()%>'></textarea></TD>
+							name='accountDescription' ROWS="5" COLS="50"><%=accountVO.getAccountDesc()%></textarea></TD>
 
 				</tr>
 
@@ -800,7 +842,14 @@ $(document).ready(function(){
 		<%
 			} else if (event != null && event.equals("4")) {
 		%>
+		<%
+			AdminBSO adminBSO = new AdminBSOImpl();
+				List<UserVO> userVOList = adminBSO.getUserLobHeadList();
+		%>
+		<title>Edit Lob</title>
 		<div id="lobdiv">
+			<input type="hidden" value="lob" name="module"> <input
+				type="hidden" value="<%=lobVO.getLobId()%>" name="lobId">
 			<TABLE id="lob" width="30%" class="notepad" align="center">
 
 				<tr class=row_odd>
@@ -850,8 +899,28 @@ $(document).ready(function(){
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'> LOB Head </FONT><FONT COLOR="red">*</FONT></TD>
-					<TD colspan=2 align=left><Input type=text name='lobHead'
-						value='<%=lobVO.getLobHead()%>' maxlength='10'></TD>
+					<TD colspan=2 align=left><Select name='lobHead' maxlength='10'>
+							<option value="0">Select</option>
+							<%
+								for (UserVO userVO : userVOList) {
+							%>
+							<%
+								if (userVO.getRegID() == lobVO.getLobHeadId()) {
+							%>
+							<option selected="selected" value=<%=userVO.getRegID()%>><%=userVO.getFirstName()%>
+								<%=userVO.getLastName()%></option>
+							<%
+								} else {
+							%>
+							<option value=<%=userVO.getRegID()%>><%=userVO.getFirstName()%>
+								<%=userVO.getLastName()%></option>
+							<%
+								}
+							%>
+							<%
+								}
+							%>
+					</Select></TD>
 				</tr>
 
 
@@ -859,7 +928,7 @@ $(document).ready(function(){
 					<TD align="left"><FONT SIZE="2" COLOR="#AA2504" face='verdana'>LOB
 							Description </TD>
 					<TD colspan='2' align='left'><textarea name='lobdesc' ROWS="5"
-							COLS="50" value='<%=lobVO.getLobDesc()%>'></textarea></TD>
+							COLS="50"><%=lobVO.getLobDesc()%></textarea></TD>
 
 				</tr>
 

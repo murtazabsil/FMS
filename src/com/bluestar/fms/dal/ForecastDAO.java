@@ -15,4 +15,6 @@ public interface ForecastDAO {
 	public List<ForecastVO> getForecastList(Long projectId); 
 	public Project getProjectById(Long projectId);
 	public Manager getManagerById(Long managerId);
+	public Forecast getForecastDetails(Long forecastId);
+	public Forecast getForecastEntity(Long forecastId);
 }

@@ -83,6 +83,8 @@ public class Project implements Serializable {
     @JoinColumn(name = "project_account", referencedColumnName = "account_id")
     @ManyToOne
     private Account projectAccount;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projectId")
+    private Collection<Actual> actualCollection;
 
     public Project() {
     }
@@ -195,6 +197,15 @@ public class Project implements Serializable {
 
     public void setProjectAccount(Account projectAccount) {
         this.projectAccount = projectAccount;
+    }
+
+    @XmlTransient
+    public Collection<Actual> getActualCollection() {
+        return actualCollection;
+    }
+
+    public void setActualCollection(Collection<Actual> actualCollection) {
+        this.actualCollection = actualCollection;
     }
 
     @Override

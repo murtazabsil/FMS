@@ -8,12 +8,14 @@ import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Project;
 import com.bluestar.fms.entity.ProjectManagerLink;
+import com.bluestar.fms.entity.User;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.LinkVO;
 import com.bluestar.fms.vo.LobVO;
 import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
+import com.bluestar.fms.vo.MonthVO;
 import com.bluestar.fms.vo.PriorityVO;
 import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
@@ -67,4 +69,13 @@ public interface AdminDAO {
 	public Manager getManagerFromManagerId(Long managerId);
 	
 	public ProjectManagerLink linkManagerToProject(ProjectManagerLinkVO projectManagerLinkVO);
+	public List<MonthVO> getMonthList();
+	public User getUserFromUserId(Long userId);
+	public List<UserVO> getUserAccountHeadList();
+	public List<UserVO> getUserLobHeadList();
+	public List<ProjectVO> getProjectVOListForAccount(Long accountHeadId);
+	public List<ManagerVO> getManagerListForAccount(Long accountHeadId);
+	public List<ProjectVO> getProjectVOListForLob(Long lobHeadId);
+	public List<ManagerVO> getManagerListForLob(Long lobHeadId);
+	public List<AccountVO> getAccountVOListForLob(Long lobHeadId);
 }

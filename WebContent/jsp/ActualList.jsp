@@ -1,3 +1,6 @@
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="com.bluestar.fms.vo.ForecastVO"%>
 <%@page import="com.bluestar.fms.vo.AccountVO"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bluestar.fms.util.PrintStackTraceLogger"%>
@@ -22,49 +25,38 @@
 </head>
 <body>
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
-	<%
-		AdminBSO adminBSO = new AdminBSOImpl();
-		try {
-			List<AccountVO> accountList = adminBSO.getAccountList();
-			request.setAttribute("accountList", accountList);
-		} catch (Exception exception) {
-			PrintStackTraceLogger.getStackTrace(exception);
-		}
-	%>
 	<div id="project-list">
 		<div id="page-title">
-			<h2>Account List</h2>
+			<h2>Actual List</h2>
 		</div>
 		<div id="add-button">
-			<a href="AddAccount.jsp"> <span
-				style="background-color: #565656; padding: 7px; color: white;">Add
-					New Account</span>
+			<a
+				href="<%=request.getContextPath()%>/jsp/AddActual.jsp?projectId=<%=request.getParameter("projectId")%>&forecastId=<%=request.getParameter("forecastId")%>">
+				<span style="background-color: #565656; padding: 7px; color: white;">Add
+					New Forecast</span>
 			</a>
 		</div>
 		<div class="table-responsive">
 			<table id="project-list-table" align="center">
 				<thead>
 					<tr>
-						<th>Id</th>
 						<th>Name</th>
-						<th>Lob</th>
-						<th>Client</th>
-						<th>Location</th>
-						<th>Head</th>
+						<th>Forecast Name</th>
+						<th>Month</th>
+						<th>Created By</th>
 						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${accountList}" var="element">
+					<c:forEach items="${actualList}" var="element">
 						<tr>
-							<td>${element.accountId}</td>
-							<td title="${element.accountDesc}">${element.accountName}</td>
-							<td>${element.accountLobName}</td>
-							<td>${element.accountClient}</td>
-							<td>${element.accountLocationName}</td>
-							<td>${element.accountHeadName}</td>
+							<td>${element.actualName}</td>
+							<td>${element.forecastName}</td>
+							<td>${element.actualMonth}</td>
+							<td>${element.createdByName}</td>
 							<td><a
-								href="<%=request.getContextPath()%>/Admin?action=edit&event=3&id=${element.accountId}">Edit</a></td>
+								href="<%=request.getContextPath()%>/ForecastServlet?requestFrom=ForecastEdit&projectId=${element.projectId}&id=${element.forecastId}">Edit</a></td>
+							<td>${element.createdOnDesc}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

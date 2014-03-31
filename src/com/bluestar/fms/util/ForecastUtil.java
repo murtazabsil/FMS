@@ -26,6 +26,7 @@ public class ForecastUtil {
 			forecastBSO = new ForecastBSOImpl();
 			forecast = new Forecast();
 			list = new ArrayList<ForecastDetail>();
+			forecast.setForecastId(forecastVO.getForecastId());
 			forecast.setForecastName(forecastVO.getForecastName());
 			forecast.setForecastYear(forecastVO.getForecastYear());
 			forecast.setForecastMonth(forecastBSO.getMonthById(forecastVO
@@ -56,6 +57,9 @@ public class ForecastUtil {
 		ForecastVO forecastVO = null;
 		try {
 			forecastVO = new ForecastVO();
+			if (request.getParameter("forecastId") != null)
+				forecastVO.setForecastId(Long.parseLong(request
+						.getParameter("forecastId")));
 			forecastVO.setForecastName(request.getParameter("forecast-name"));
 			forecastVO.setForecastYear(Integer.parseInt(request
 					.getParameter("forecast-year")));
@@ -103,15 +107,13 @@ public class ForecastUtil {
 					.getCreatedOn()));
 			forecastVO.setForecastMonthDesc(forecast.getForecastMonth()
 					.getMonthName());
-			/*
-			 * for (int index = 1; index <= 12; index++) { if
-			 * (forecastVO.getForecastData()[index] != null) { forecastDetail =
-			 * new ForecastDetail();
-			 * forecastDetail.setCost(forecastVO.getForecastData()[index]);
-			 * forecastDetail.setMonthId(forecastBSO.getMonthById(index));
-			 * forecastDetail.setForecastId(forecast); list.add(forecastDetail);
-			 * } } forecast.setForecastDetailCollection(list);
-			 */
+			Double[] forecastDetails = new Double[13];
+			for (ForecastDetail forecastDetail : forecast
+					.getForecastDetailCollection()) {
+				forecastDetails[forecastDetail.getMonthId().getMonthId()] = forecastDetail
+						.getCost();
+			}
+			forecastVO.setForecastData(forecastDetails);
 		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}

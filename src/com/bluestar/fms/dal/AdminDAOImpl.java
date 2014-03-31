@@ -15,6 +15,7 @@ import com.bluestar.fms.entity.Lob;
 import com.bluestar.fms.entity.Location;
 import com.bluestar.fms.entity.Manager;
 import com.bluestar.fms.entity.Module;
+import com.bluestar.fms.entity.Month;
 import com.bluestar.fms.entity.Priority;
 import com.bluestar.fms.entity.Project;
 import com.bluestar.fms.entity.ProjectManagerLink;
@@ -24,6 +25,7 @@ import com.bluestar.fms.entity.User;
 import com.bluestar.fms.util.AdminUtil;
 import com.bluestar.fms.util.ConfigReader;
 import com.bluestar.fms.util.PrintStackTraceLogger;
+import com.bluestar.fms.util.UserType;
 import com.bluestar.fms.vo.AccountVO;
 import com.bluestar.fms.vo.CurrencyVO;
 import com.bluestar.fms.vo.DepartmentVO;
@@ -32,6 +34,7 @@ import com.bluestar.fms.vo.LobVO;
 import com.bluestar.fms.vo.LocationVO;
 import com.bluestar.fms.vo.ManagerVO;
 import com.bluestar.fms.vo.ModuleVO;
+import com.bluestar.fms.vo.MonthVO;
 import com.bluestar.fms.vo.PriorityVO;
 import com.bluestar.fms.vo.ProjectManagerLinkVO;
 import com.bluestar.fms.vo.ProjectVO;
@@ -1107,6 +1110,195 @@ public class AdminDAOImpl implements AdminDAO {
 			PrintStackTraceLogger.getStackTrace(exception);
 		}
 		return manager;
+	}
+
+	@Override
+	public List<MonthVO> getMonthList() {
+		Transaction trn = null;
+		Session session = null;
+		List<Month> listMonth = new ArrayList<Month>();
+		List<MonthVO> listMonthVO = new ArrayList<MonthVO>();
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			trn = session.getTransaction();
+			trn.begin();
+			// listProject = daoMgr.findAll("Project");
+			Query query = session.createQuery("from " + " Month ");
+			listMonth = query.list();
+			listMonthVO = AdminUtil.getMonthVOListFromEntityList(listMonth);
+			System.out.println("listProjectVO ++++++ " + listMonthVO.size());
+			session.beginTransaction().commit();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			if (session != null) {
+				if (session.isOpen()) {
+					session.beginTransaction().rollback();
+				}
+			}
+		}
+		return listMonthVO;
+	}
+
+	@Override
+	public User getUserFromUserId(Long userId) {
+		// TODO Auto-generated method stub
+		Session session = null;
+		DAOManager daoManager = null;
+		User user = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			daoManager = new DAOManager(session);
+			user = daoManager.find(userId, "User");
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return user;
+	}
+
+	@Override
+	public List<UserVO> getUserAccountHeadList() {
+		Session session = null;
+		List<UserVO> userVOList = null;
+		try {
+			userVOList = new ArrayList<UserVO>();
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query uerListQuery = session
+					.createQuery("SELECT u FROM User u WHERE u.userType.userTypeId = :userTypeId");
+			uerListQuery.setLong("userTypeId", UserType.ACCOUNT.getUserType());
+			List<User> userList = uerListQuery.list();
+			userVOList = AdminUtil.getUserVOListFromEntityList(userList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return userVOList;
+	}
+
+	@Override
+	public List<UserVO> getUserLobHeadList() {
+		Session session = null;
+		List<UserVO> userVOList = null;
+		try {
+			userVOList = new ArrayList<UserVO>();
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query uerListQuery = session
+					.createQuery("SELECT u FROM User u WHERE u.userType.userTypeId = :userTypeId");
+			uerListQuery.setLong("userTypeId", UserType.LOB.getUserType());
+			List<User> userList = uerListQuery.list();
+			userVOList = AdminUtil.getUserVOListFromEntityList(userList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return userVOList;
+	}
+
+	@Override
+	public List<ProjectVO> getProjectVOListForAccount(Long accountHeadId) {
+		List<ProjectVO> projectVOList = null;
+		Session session = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query projectListQuery = session
+					.createSQLQuery(
+							"SELECT * FROM project WHERE project_account IN (SELECT account_id FROM account WHERE account_head = :accountHeadId)")
+					.addEntity(Project.class);
+			projectListQuery.setLong("accountHeadId", accountHeadId);
+			List<Project> projectList = projectListQuery.list();
+			projectVOList = AdminUtil
+					.getProjectVOListFromEntityList(projectList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectVOList;
+	}
+
+	@Override
+	public List<ManagerVO> getManagerListForAccount(Long accountHeadId) {
+		List<ManagerVO> managerVOList = null;
+		Session session = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query managerListQuery = session
+					.createSQLQuery(
+							"SELECT * FROM manager WHERE manager_account_id IN (SELECT account_id FROM account WHERE account_head = :accountHeadId)")
+					.addEntity(Manager.class);
+			managerListQuery.setLong("accountHeadId", accountHeadId);
+			List<Manager> managerList = managerListQuery.list();
+			managerVOList = AdminUtil
+					.getManagerVOListFromEntityList(managerList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return managerVOList;
+	}
+
+	@Override
+	public List<ProjectVO> getProjectVOListForLob(Long lobHeadId) {
+		List<ProjectVO> projectVOList = null;
+		Session session = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query projectListQuery = session
+					.createSQLQuery(
+							"SELECT * FROM project WHERE project_lob IN (SELECT lob_id FROM lob WHERE lob_head = :lobHeadId)")
+					.addEntity(Project.class);
+			projectListQuery.setLong("lobHeadId", lobHeadId);
+			List<Project> projectList = projectListQuery.list();
+			projectVOList = AdminUtil
+					.getProjectVOListFromEntityList(projectList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return projectVOList;
+	}
+
+	@Override
+	public List<ManagerVO> getManagerListForLob(Long lobHeadId) {
+		List<ManagerVO> managerVOList = null;
+		Session session = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query managerListQuery = session
+					.createSQLQuery(
+							"SELECT * FROM manager WHERE manager_lob_id IN (SELECT lob_id FROM lob WHERE lob_head = :lobHeadId)")
+					.addEntity(Manager.class);
+			managerListQuery.setLong("lobHeadId", lobHeadId);
+			List<Manager> managerList = managerListQuery.list();
+			managerVOList = AdminUtil
+					.getManagerVOListFromEntityList(managerList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return managerVOList;
+	}
+
+	@Override
+	public List<AccountVO> getAccountVOListForLob(Long lobHeadId) {
+		List<AccountVO> accountVOList = null;
+		Session session = null;
+		try {
+			session = ConnectionManager.getSession(ConfigReader
+					.getMastersConfig());
+			Query accountListQuery = session
+					.createSQLQuery(
+							"SELECT * FROM account WHERE account_lob IN (SELECT lob_id FROM lob WHERE lob_head = :lobHeadId)")
+					.addEntity(Account.class);
+			accountListQuery.setLong("lobHeadId", lobHeadId);
+			List<Account> accountList = accountListQuery.list();
+			accountVOList = AdminUtil.getAccountVOListFromEntityList(accountList);
+		} catch (Exception exception) {
+			PrintStackTraceLogger.getStackTrace(exception);
+		}
+		return accountVOList;
 	}
 
 }

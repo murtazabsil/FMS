@@ -8,6 +8,7 @@
 
 <HTML>
 <head>
+<title>Add New User</title>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
 <script LANGUAGE="Javascript" SRC="Images/calender.js"></script>
 <script LANGUAGE="Javascript" SRC="Images/validate.js"></script>
@@ -159,8 +160,8 @@
 	<FORM NAME="RegUser" ACTION="<%=request.getContextPath()%>/Admin"
 		onsubmit="return validate();" method="post">
 		<input type='hidden' id='event' name='event' value='<%=event%>'>
-		<input type="hidden" name="action" value="add">
-		<input type="hidden" name="module" value="user">
+		<input type="hidden" name="action" value="add"> <input
+			type="hidden" name="module" value="user">
 		<TABLE width="60%" align="center">
 			<TR class=row_even>
 				<TH align="left">First Name <FONT COLOR="red">*</TH>
@@ -201,7 +202,7 @@
 						<%
 							for (String str : designationList) {
 
-								if (str.substring(0, str.lastIndexOf("|")).equals(designation)) {
+								if (str.substring(0, str.lastIndexOf("|")).equals(userVO.getDesignation().toString())) {
 						%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 							selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 						<%
@@ -219,9 +220,8 @@
 
 			<TR class=row_even>
 				<TH align="left">Address <FONT COLOR="red">*</FONT></TH>
-				<TD class=row_odd>&nbsp;&nbsp;<textarea name="Address"
-						value='<%=userVO != null && userVO.getAddress() != null ? userVO
-					.getAddress() : ""%>'></textarea>
+				<TD class=row_odd>&nbsp;&nbsp;<textarea name="Address"><%=userVO != null && userVO.getAddress() != null ? userVO
+					.getAddress() : ""%></textarea>
 			</TR>
 			<TR class=row_even>
 				<TH align="left">Contact Number <FONT COLOR="red">*</TH>
@@ -241,18 +241,6 @@
 					<div id='nameid'></div>
 				</TD>
 			</TR>
-
-			<TR class=row_even>
-				<TH align="left">Password <FONT COLOR="red">*</TH>
-				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
-					name='upassword' value=''>
-			</TR>
-
-			<TR class=row_even>
-				<TH align="left">ReType Password <FONT COLOR="red">*</TH>
-				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
-					name='retypepassword' value=''>
-			</TR>
 			<%
 				} else {
 			%>
@@ -265,6 +253,17 @@
 			<%
 				}
 			%>
+			<TR class=row_even>
+				<TH align="left">Password <FONT COLOR="red">*</TH>
+				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
+					name='upassword' value=<%=userVO.getPassword()%>>
+			</TR>
+
+			<TR class=row_even>
+				<TH align="left">ReType Password <FONT COLOR="red">*</TH>
+				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
+					name='retypepassword' value=<%=userVO.getPassword()%>>
+			</TR>
 			<TR class="row_even">
 				<TH align="left">User Type</TH>
 				<TD class="row_odd">&nbsp;&nbsp;<SELECT id="userType"

@@ -24,22 +24,17 @@
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
 	<%
 		AdminBSO adminBSO = new AdminBSOImpl();
-		try {
-			List<AccountVO> accountList = adminBSO.getAccountList();
-			request.setAttribute("accountList", accountList);
-		} catch (Exception exception) {
-			PrintStackTraceLogger.getStackTrace(exception);
-		}
+			try {
+		List<AccountVO> accountList = adminBSO.getAccountVOListForLob((Long) session
+				.getAttribute("userRegId"));
+		request.setAttribute("accountList", accountList);
+			} catch (Exception exception) {
+		PrintStackTraceLogger.getStackTrace(exception);
+			}
 	%>
 	<div id="project-list">
 		<div id="page-title">
 			<h2>Account List</h2>
-		</div>
-		<div id="add-button">
-			<a href="AddAccount.jsp"> <span
-				style="background-color: #565656; padding: 7px; color: white;">Add
-					New Account</span>
-			</a>
 		</div>
 		<div class="table-responsive">
 			<table id="project-list-table" align="center">
@@ -51,7 +46,6 @@
 						<th>Client</th>
 						<th>Location</th>
 						<th>Head</th>
-						<th>Edit</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,8 +57,6 @@
 							<td>${element.accountClient}</td>
 							<td>${element.accountLocationName}</td>
 							<td>${element.accountHeadName}</td>
-							<td><a
-								href="<%=request.getContextPath()%>/Admin?action=edit&event=3&id=${element.accountId}">Edit</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -350,6 +350,77 @@ public class AdminServlet extends HttpServlet {
 					}
 				}
 			}
+			
+			if("edit".equalsIgnoreCase(action)){
+				if ("project".equalsIgnoreCase(module)) {
+					ProjectVO projectVO = AdminHelper
+							.convertRequestToProjectVO(request);
+					Project project = AdminUtil
+							.convertProjectVOtoEntity(projectVO);
+					if (daoManager.createOrUpdate(project) != null) {
+						request.setAttribute("Path", "ProjectList");
+					} else {
+						request.setAttribute("Path", "AddProject");
+						request.setAttribute("error",
+								AdminConstants.ERROR_ADD_PROJECT);
+					}
+				}
+				if ("manager".equalsIgnoreCase(module)) {
+					ManagerVO managerVO = AdminHelper
+							.convertRequestToManagerVO(request);
+					Manager manager = AdminUtil
+							.convertManagerVOtoEntity(managerVO);
+					if (daoManager.createOrUpdate(manager) != null) {
+						request.setAttribute("Path", "ManagerList");
+					} else {
+						request.setAttribute("Path", "AddManager");
+						request.setAttribute("error",
+								AdminConstants.ERROR_ADD_MANAGER);
+					}
+				}
+				if ("account".equalsIgnoreCase(module)) {
+					AccountVO accountVO = AdminHelper
+							.convertRequestToAccountVO(request);
+					Account account = AdminUtil
+							.convertAccountVOtoEntity(accountVO);
+					if (daoManager.createOrUpdate(account) != null) {
+						request.setAttribute("Path", "AccountList");
+					} else {
+						request.setAttribute("Path", "AddAccount");
+						request.setAttribute("error",
+								AdminConstants.ERROR_ADD_ACCOUNT);
+					}
+				}
+				if ("lob".equalsIgnoreCase(module)) {
+					LobVO lobVO = AdminHelper.convertRequestToLobVO(request);
+					Lob lob = AdminUtil.convertLobVOtoEntity(lobVO);
+					if (daoManager.createOrUpdate(lob) != null) {
+						request.setAttribute("Path", "LobList");
+					} else {
+						request.setAttribute("Path", "AddLob");
+						request.setAttribute("error",
+								AdminConstants.ERROR_ADD_LOB);
+					}
+				}
+				if ("user".equalsIgnoreCase(module)) {
+					UserVO userVO = AdminHelper.convertRequestToUserVO(request);
+					User user = AdminUtil.convertUserVOtoEntity(userVO);
+					if (userVO.getDesignation() == UserType.MANAGER
+							.getUserType()) {
+						ManagerVO managerVO = AdminHelper
+								.getMAnagerVOFromUserVO(userVO);
+						AdminDAO adminDAOImpl = new AdminDAOImpl();
+						adminDAOImpl.addManagerFromUser(managerVO);
+					}
+					if (daoManager.create(user) != null) {
+						request.setAttribute("Path", "UserList");
+					} else {
+						request.setAttribute("Path", "AddUser");
+						request.setAttribute("error",
+								AdminConstants.ERROR_ADD_USER);
+					}
+				}
+			}
 		} catch (Exception exception) {
 			PrintStackTraceLogger.getStackTrace(exception);
 		} finally {

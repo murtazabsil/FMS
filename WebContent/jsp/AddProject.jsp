@@ -14,7 +14,7 @@
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/jquery-ui.css">
 <script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/scripts/jquery-ui.js"></script>
-<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/scripts/datetimepicker.js"></script> 
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/scripts/datetimepicker.js"></script>
 <script LANGUAGE="Javascript" SRC="../Images/validate.js"></script>
 <script LANGUAGE="Javascript" SRC="../Images/AjaxCall.js"></script>
 

@@ -10,7 +10,7 @@
 
 <HTML>
 <HEAD>
-<TITLE>Add Resorts</TITLE>
+<TITLE>Add New Manager</TITLE>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
 <SCRIPT LANGUAGE="JavaScript">
 <!--

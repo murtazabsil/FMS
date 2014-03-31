@@ -59,8 +59,8 @@
 						<tr>
 							<td>${element.lobId}</td>
 							<td title="${element.lobDesc}">${element.lobName}</td>
-							<td>${element.lobLocation}</td>
-							<td>${element.lobHead}</td>
+							<td>${element.lobLocationName}</td>
+							<td>${element.lobHeadName}</td>
 							<td><a
 								href="<%=request.getContextPath()%>/Admin?action=edit&event=4&id=${element.lobId}">Edit</a></td>
 						</tr>

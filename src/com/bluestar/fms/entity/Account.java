@@ -35,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByAccountId", query = "SELECT a FROM Account a WHERE a.accountId = :accountId"),
     @NamedQuery(name = "Account.findByAccountName", query = "SELECT a FROM Account a WHERE a.accountName = :accountName"),
     @NamedQuery(name = "Account.findByAccountClient", query = "SELECT a FROM Account a WHERE a.accountClient = :accountClient"),
-    @NamedQuery(name = "Account.findByAccountHead", query = "SELECT a FROM Account a WHERE a.accountHead = :accountHead"),
     @NamedQuery(name = "Account.findByAccountDesc", query = "SELECT a FROM Account a WHERE a.accountDesc = :accountDesc")})
 public class Account implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -51,9 +50,6 @@ public class Account implements Serializable {
     @Size(max = 64)
     @Column(name = "account_client")
     private String accountClient;
-    @Size(max = 20)
-    @Column(name = "account_head")
-    private String accountHead;
     @Size(max = 255)
     @Column(name = "account_desc")
     private String accountDesc;
@@ -61,6 +57,9 @@ public class Account implements Serializable {
     private Collection<Manager> managerCollection;
     @OneToMany(mappedBy = "projectAccount")
     private Collection<Project> projectCollection;
+    @JoinColumn(name = "account_head", referencedColumnName = "regid")
+    @ManyToOne
+    private User accountHead;
     @JoinColumn(name = "account_location", referencedColumnName = "location_id")
     @ManyToOne
     private Location accountLocation;
@@ -99,14 +98,6 @@ public class Account implements Serializable {
         this.accountClient = accountClient;
     }
 
-    public String getAccountHead() {
-        return accountHead;
-    }
-
-    public void setAccountHead(String accountHead) {
-        this.accountHead = accountHead;
-    }
-
     public String getAccountDesc() {
         return accountDesc;
     }
@@ -131,6 +122,14 @@ public class Account implements Serializable {
 
     public void setProjectCollection(Collection<Project> projectCollection) {
         this.projectCollection = projectCollection;
+    }
+
+    public User getAccountHead() {
+        return accountHead;
+    }
+
+    public void setAccountHead(User accountHead) {
+        this.accountHead = accountHead;
     }
 
     public Location getAccountLocation() {

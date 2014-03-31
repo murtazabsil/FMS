@@ -1,3 +1,4 @@
+<%@page import="com.bluestar.fms.util.UserType"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.bluestar.fms.vo.ForecastVO"%>
@@ -13,7 +14,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Account List</title>
+<title>Forecast List</title>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/css/dataTables.css">
 <script type="text/javascript"
@@ -27,14 +28,22 @@
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
 	<div id="project-list">
 		<div id="page-title">
-			<h2>Account List</h2>
+			<h2>Forecast List</h2>
 		</div>
+		<%
+			if ((Long) session.getAttribute("userType") == UserType.MANAGER
+					.getUserType()) {
+		%>
 		<div id="add-button">
-			<a href="<%=request.getContextPath()%>/jsp/AddForecast.jsp?projectId=<%=request.getParameter("projectId")%>"> <span
-				style="background-color: #565656; padding: 7px; color: white;">Add
+			<a
+				href="<%=request.getContextPath()%>/jsp/AddForecast.jsp?projectId=<%=request.getParameter("projectId")%>">
+				<span style="background-color: #565656; padding: 7px; color: white;">Add
 					New Forecast</span>
 			</a>
 		</div>
+		<%
+			}
+		%>
 		<div class="table-responsive">
 			<table id="project-list-table" align="center">
 				<thead>
@@ -43,8 +52,15 @@
 						<th>Year</th>
 						<th>Month</th>
 						<th>Created By</th>
+						<%
+							if ((Long) session.getAttribute("userType") == UserType.MANAGER
+									.getUserType()) {
+						%>
 						<th>Edit</th>
-						<th>Last Edited On</th>
+						<th>View Actuals</th>
+						<%
+							}
+						%>
 					</tr>
 				</thead>
 				<tbody>
@@ -54,9 +70,17 @@
 							<td>${element.forecastYear}</td>
 							<td>${element.forecastMonthDesc}</td>
 							<td>${element.createdByName}</td>
+							<%
+								if ((Long) session.getAttribute("userType") == UserType.MANAGER
+											.getUserType()) {
+							%>
 							<td><a
-								href="<%=request.getContextPath()%>/Admin?action=edit&event=3&id=${element.forecastId}">Edit</a></td>
-								<td>${element.createdOnDesc}</td>
+								href="<%=request.getContextPath()%>/ForecastServlet?requestFrom=ForecastEdit&projectId=<%=request.getParameter("projectId")%>&id=${element.forecastId}">Edit</a></td>
+							<td><a
+								href="<%=request.getContextPath()%>/ActualServlet?requestFrom=IsActual&projectId=<%=request.getParameter("projectId")%>&forecastId=${element.forecastId}">View</a></td>
+							<%
+								}
+							%>
 						</tr>
 					</c:forEach>
 				</tbody>
