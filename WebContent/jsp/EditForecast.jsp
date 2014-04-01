@@ -14,6 +14,7 @@
 <title>Edit Forecast</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, user-scalable=no">
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/Images/validate.js"></script>
 </head>
 <body>
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
@@ -22,6 +23,7 @@
 			$('#forecast-submit').click(function() {
 				$('#forecast-year').removeAttr('disabled');
 				$('#forecast-month').removeAttr('disabled');
+				return validateForecast(this);
 			});
 		});
 	</script>
@@ -138,6 +140,9 @@
 					<td colspan="3"><input class="sitewide-button" id="forecast-submit" type="submit"
 					value="Submit" /> <input class="sitewide-button"
 					id="forecast-reset" type="reset" value="Reset" /></td>
+					</tr>
+					<tr>
+						<td colspan="3"><FONT COLOR="red">Note : </FONT>Please enter value of at least one month.</td>
 					</tr>
 				</table>
 			</div>

@@ -10,123 +10,7 @@
 <head>
 <title>Add New User</title>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
-<script LANGUAGE="Javascript" SRC="Images/calender.js"></script>
-<script LANGUAGE="Javascript" SRC="Images/validate.js"></script>
-<script LANGUAGE="Javascript" SRC="Images/AjaxCall.js"></script>
-
-<script LANGUAGE="Javascript">
-	function ChkMandatoryField(F, T) {
-		var val = F.value;
-		alert('this is val===' + val);
-		if (val == "") {
-			alert(T + " is mandatory");
-			return false;
-		}
-	}
-	function ChkNumField(F, T) {
-		var val = F.value;
-		if (isNaN(val) == true || val == "") {
-			alert("Please enter numbers for " + T);
-			return false;
-		}
-	}
-	function DoPassWordValidation() {
-		var frm = document.forms(0);
-		if (frm.upassword.value != frm.retypepassword.value) {
-			alert('The Password and verified password does not match');
-			frm.upassword.value = '';
-			frm.retypepassword.value = '';
-			return false;
-		} else {
-			return true;
-		}
-	}
-	function ChkEmailField(F, T) {
-		var val = F.value;
-		var pattern = /^[a-zA-Z0-9\_\.]+\@[a-zA-Z\.]+\.([a-z]{2,4})$/;
-		if (!(pattern.test(val) == true)) {
-			alert("Please enter valid email for " + T);
-			return false;
-		}
-	}
-	function validate() {
-		alert(" validate 1");
-		var frm = document.forms[0];
-		//	MemberFee();
-		var event = document.getElementById('event').value;
-		if (event == null && event == '') {
-			if (ChkMandatoryField(frm.UserID, 'User Id') == false)
-				return false;
-			var divObj = document.getElementById("nameid");
-			alert(" validate 2");
-			/*var Msg = divObj.innerHTML;
-			if(Msg.indexOf("not available")>-1){
-				alert("User name not available. Please choose another");
-				frm.UserID.value="";
-			}*/
-			//not available
-			if (ChkMandatoryField(frm.upassword, 'password') == false)
-				return false;
-			if (ChkMandatoryField(frm.retypepassword, 'Re type password') == false)
-				return false;
-		}
-		//  if(DoPassWordValidation()==false) return false;
-		if (ChkMandatoryField(frm.FirstName, 'First Name') == false)
-			return false;
-		if (ChkMandatoryField(frm.EmpId, 'EmpId') == false)
-			return false;
-		//    if(ChkNumField(frm.EmpId,'EmpId')==false) return false;
-		alert(" validate 3");
-		if (ChkMandatoryField(frm.EmailAddress, 'Email') == false)
-			return false;
-		if (ChkEmailField(frm.EmailAddress, 'Email') == false)
-			return false;
-		if (ChkMandatoryField(frm.Address, 'Address') == false)
-			return false;
-		alert(" validate 4");
-		if (ChkMandatoryField(frm.ContactNumber, 'Contact Number') == false)
-			return false;
-		if (ChkMandatoryField(frm.designation, 'designation') == false)
-			return false;
-		if (ChkMandatoryField(frm.userType, 'User Type') == false)
-			return false;
-		alert(" validate 5");
-		//  	if(ChkMandatoryField(frm.AmountDeposited,'AmountDeposited ')==false) return false;
-		//	if(ChkMandatoryField(frm.cardnum,'cardnum')==false) return false;
-		//	if(ChkMandatoryField(frm.pin,'pin')==false) return false;
-		//		if(ChkNumField(frm.cardnum,'Credit Card Number')==false) return false;
-		alert('after all validation');
-		document.getElementById('addmodule').value = "user";
-		alert('addmodule---' + document.getElementById('addmodule').value);
-		alert('after end validation');
-	}
-	function MemberFee() {
-		frm = document.forms(0);
-		T = frm.MemberType.value;
-		//alert(T);
-		if (T == "Silver") {
-			Amount = 5000;
-
-		} else if (T == "Gold") {
-
-			Amount = 10000;
-		} else if (T == "Platinum") {
-
-			Amount = 15000;
-		}
-
-		//alert(Amount);
-		frm.AmountDeposited.value = Amount;
-
-	}
-
-	function fnCallChkAvailability(U) {
-		var UserID = U.value;
-		var divObj = document.getElementById("nameid");
-		URL = "ChkUser.jsp?UserID=" + UserID;
-		ajaxFunction(URL, divObj);
-	}
-</script>
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/Images/validate.js"></script>
 <jsp:include page="AdminMenu.jsp"></jsp:include>
 <BODY Class="SC">
 	<%
@@ -202,7 +86,7 @@
 						<%
 							for (String str : designationList) {
 
-								if (str.substring(0, str.lastIndexOf("|")).equals(userVO.getDesignation().toString())) {
+								if (str.substring(0, str.lastIndexOf("|")).equals(userVO != null ? userVO.getDesignation().toString() : "")) {
 						%><OPTION Value=<%=str.substring(0, str.lastIndexOf("|"))%>
 							selected="selected"><%=str.substring(str.lastIndexOf("|") + 1)%></OPTION>
 						<%
@@ -256,13 +140,13 @@
 			<TR class=row_even>
 				<TH align="left">Password <FONT COLOR="red">*</TH>
 				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
-					name='upassword' value=<%=userVO.getPassword()%>>
+					name='upassword' value=<%=userVO != null ? userVO.getPassword() : ""%>>
 			</TR>
 
 			<TR class=row_even>
 				<TH align="left">ReType Password <FONT COLOR="red">*</TH>
 				<TD class=row_odd>&nbsp;&nbsp;<Input type='password'
-					name='retypepassword' value=<%=userVO.getPassword()%>>
+					name='retypepassword' value=<%=userVO != null ? userVO.getPassword() : ""%>>
 			</TR>
 			<TR class="row_even">
 				<TH align="left">User Type</TH>
@@ -292,7 +176,7 @@
 						%>
 						<TR>
 							<TH><INPUT class="sitewide-button" TYPE="submit"
-								value='Submit'></TH>
+								value='Submit' onClick="return validateUser(this)"></TH>
 							<TH><INPUT class="sitewide-button" TYPE="reset"
 								value='Clear'></TH>
 						</TR>

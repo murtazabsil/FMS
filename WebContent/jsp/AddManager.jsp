@@ -12,20 +12,7 @@
 <HEAD>
 <TITLE>Add New Manager</TITLE>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-	function validate() {
-		var frm = document.forms(0);
-		var LocationName = frm.LocationName.value;
-		if (LocationName != "") {
-			return true;
-		} else {
-			alert("Please select Location Name to proceed");
-			return false;
-		}
-	}
-//-->
-</SCRIPT>
+<script LANGUAGE="Javascript" SRC="../Images/validate.js"></script>
 </HEAD>
 <jsp:include page="AdminMenu.jsp"></jsp:include>
 <%
@@ -186,7 +173,7 @@
 
 				<tr class=row_odd>
 					<TH colspan='1'><INPUT class="sitewide-button" TYPE="submit"
-						id="manager" onClick="return validate(this);" value='Add'></TH>
+						id="manager" onClick="return validateManager(this);" value='Add'></TH>
 					<TH colspan='2'><INPUT class="sitewide-button" TYPE="reset"
 						value='Clear'></TH>
 				</TR>

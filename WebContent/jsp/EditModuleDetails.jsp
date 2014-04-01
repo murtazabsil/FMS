@@ -504,9 +504,9 @@ $(document).ready(function(){
 
 
 				<tr class=row_odd>
-					<TH colspan=1><INPUT TYPE="submit" id="project"
-						onClick="return validate(this)" value='Add'></TH>
-					<TH colspan=2><INPUT TYPE="reset" value='Clear'></TH>
+					<TH colspan=1><INPUT class="sitewide-button" TYPE="submit" id="project"
+						onClick="return validateProject(this)" value='Add'></TH>
+					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset" value='Clear'></TH>
 				</TR>
 			</TABLE>
 		</div>
@@ -694,9 +694,9 @@ $(document).ready(function(){
 
 
 				<tr class=row_odd>
-					<TH colspan='1'><INPUT TYPE="submit" id="manager"
-						onClick="return validate(this);" value='Add'></TH>
-					<TH colspan='2'><INPUT TYPE="reset" value='Clear'></TH>
+					<TH colspan='1'><INPUT class="sitewide-button" TYPE="submit" id="manager"
+						onClick="return validateManager(this);" value='Add'></TH>
+					<TH colspan='2'><INPUT class="sitewide-button" TYPE="reset" value='Clear'></TH>
 				</TR>
 			</TABLE>
 		</div>
@@ -799,7 +799,7 @@ $(document).ready(function(){
 						face='verdana'> Account Head </FONT><FONT COLOR="red">*</FONT></TD>
 					<TD colspan=2 align=left><Select id="accountHead"
 						name='accountHead' maxlength='10'>
-							<option value="0">Select</option>
+							<option value="">Select</option>
 							<%
 								for (UserVO userVO : userVOList) {
 							%>
@@ -833,9 +833,9 @@ $(document).ready(function(){
 
 
 				<tr class=row_odd>
-					<TH colspan=1><INPUT TYPE="submit" id="account"
-						onClick="return validate(this)" value='Add'></TH>
-					<TH colspan=2><INPUT TYPE="reset" value='Clear'></TH>
+					<TH colspan=1><INPUT class="sitewide-button" TYPE="submit" id="account"
+						onClick="return validateAccount(this)" value='Add'></TH>
+					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset" value='Clear'></TH>
 				</TR>
 			</TABLE>
 		</div>
@@ -899,8 +899,8 @@ $(document).ready(function(){
 				<tr class=row_odd>
 					<TD align="left" width="40%"><FONT SIZE="2" COLOR="#AA2504"
 						face='verdana'> LOB Head </FONT><FONT COLOR="red">*</FONT></TD>
-					<TD colspan=2 align=left><Select name='lobHead' maxlength='10'>
-							<option value="0">Select</option>
+					<TD colspan=2 align=left><Select id="lobHead" name='lobHead' maxlength='10'>
+							<option value="">Select</option>
 							<%
 								for (UserVO userVO : userVOList) {
 							%>
@@ -934,9 +934,9 @@ $(document).ready(function(){
 
 
 				<tr class=row_odd>
-					<TH colspan=1><INPUT TYPE="submit" id="lob"
-						onClick="return validate(this)" value='Add'></TH>
-					<TH colspan=2><INPUT TYPE="reset" value='Clear'></TH>
+					<TH colspan=1><INPUT class="sitewide-button" TYPE="submit" id="lob"
+						onClick="return validateLob(this)" value='Add'></TH>
+					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset" value='Clear'></TH>
 				</TR>
 			</TABLE>
 		</div>

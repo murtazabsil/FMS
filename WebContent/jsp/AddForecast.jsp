@@ -6,6 +6,7 @@
 <title>Add Forecast</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, user-scalable=no">
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/Images/validate.js"></script>
 </head>
 <body>
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
@@ -21,12 +22,14 @@
 			<div>
 				<table align="center" cellpadding="10">
 					<tr>
-						<td>Forecast Name :</td>
+						<td>Forecast Name <FONT COLOR="red">*</FONT>
+						</td>
 						<td><input type="text" name="forecast-name"
 							id="forecast-name"></td>
 					</tr>
 					<tr>
-						<td>Select Year :</td>
+						<td>Select Year <FONT COLOR="red">*</FONT>
+						</td>
 						<td><select name="forecast-year" id="forecast-year">
 								<option>2013</option>
 								<option>2014</option>
@@ -34,7 +37,8 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td>ForeCast for Month :</td>
+						<td>ForeCast for Month <FONT COLOR="red">*</FONT>
+						</td>
 						<td><select name="forecast-month" id="forecast-month">
 								<option value="1">JANUARY</option>
 								<option value="2">FEBRUARY</option>
@@ -96,12 +100,15 @@
 					<tr>
 					<tr align="center">
 						<td colspan="3"><input class="sitewide-button"
-							id="forecast-submit" type="submit" value="Submit" /> <input
+							id="forecast-submit" type="submit" value="Submit" onclick="return validateForecast(this)" /> <input
 							class="sitewide-button" id="forecast-reset" type="reset"
 							value="Reset" /></td>
 					</tr>
+					<tr>
+						<td colspan="3"><FONT COLOR="red">Note : </FONT>Please enter value of at least one month.</td>
+					</tr>
 				</table>
-			</div>
+				<div></div>
 		</form>
 	</div>
 	<jsp:include page="Footer.html"></jsp:include>

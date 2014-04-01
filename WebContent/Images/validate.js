@@ -1,3 +1,190 @@
+function validateProject(newthis){
+	if($('input[name="projectName"]').val() === ""){
+		alert('Project Name is required field.');
+		return false;
+	}
+	if($('#projectLob').val() === ""){
+		alert('Project Lob is required field.');
+		return false;
+	}
+	if($('#projectAccount').val() === ""){
+		alert('Project Account is required field.');
+		return false;
+	}
+	if($('#priority').val() === ""){
+		alert('Project priority is required field.');
+		return false;
+	}
+	if($('#projectStatus').val() === ""){
+		alert('Project Status is required field.');
+		return false;
+	}
+	if($('#projectType').val() === ""){
+		alert('Project type is required field.');
+		return false;
+	}
+	if($('#startdate').val() === ""){
+		alert('Project Start Date is required field.');
+		return false;
+	}
+	if($('#enddate').val() === ""){
+		alert('Project End Date is required field.');
+		return false;
+	}
+}
+
+function validateManager(newthis){
+	if($('input[name="pmName"]').val() === ""){
+		alert('Manager name is required field.');
+		return false;
+	}
+	if($('input[name="pmEmpId"]').val() === ""){
+		alert('Manager Employee Id is required field.');
+		return false;
+	}
+	if($('#pmdepartment').val() === ""){
+		alert('Manager department is required field.');
+		return false;
+	}
+	if($('#pmlob').val() === ""){
+		alert('Manager lob is required field.');
+		return false;
+	}
+	if($('#pmaccount').val() === ""){
+		alert('Manager account is required field.');
+		return false;
+	}
+	if($('#pmlocation').val() === ""){
+		alert('Manager location is required field.');
+		return false;
+	}
+	if($('#pmcurrency').val() === ""){
+		alert('Manager currency is required field.');
+		return false;
+	}
+	if($('input[name="pmdesc"]').val() === ""){
+		alert('Manager description is required field.');
+		return false;
+	}
+}
+
+function validateAccount(newthis){
+	if($('input[name="accountName"]').val() === ""){
+		alert('Account name is required field.');
+		return false;
+	}
+	if($('#accountlob').val() === ""){
+		alert('Account lob is required field.');
+		return false;
+	}
+	if($('input[name="accountClient"]').val() === ""){
+		alert('Account client name is required field.');
+		return false;
+	}
+	if($('#accountlocation').val() === ""){
+		alert('Account location is required field.');
+		return false;
+	}
+	if($('#accountHead').val() === ""){
+		alert('Account head is required field.');
+		return false;
+	}
+}
+
+function validateLob(newthis){
+	if($('input[name="lobName"]').val() === ""){
+		alert('Lob name is required field.');
+		return false;
+	}
+	if($('#loblocation').val() === ""){
+		alert('Lob location is required field.');
+		return false;
+	}
+	if($('#lobHead').val() === ""){
+		alert('Lob head is required field.');
+		return false;
+	}
+}
+
+function validateUser(newthis){
+	if($('input[name="FirstName"]').val() === ""){
+		alert('First name is required field.');
+		return false;
+	}
+	if($('input[name="EmailAddress"]').val() === ""){
+		alert('Email address is required field.');
+		return false;
+	}
+	if($('#designation').val() === ""){
+		alert('Designation is required field.');
+		return false;
+	}
+	if($('input[name="Address"]').val() === ""){
+		alert('Address is required field.');
+		return false;
+	}
+	if($('input[name="ContactNumber"]').val() === ""){
+		alert('Contact number is required field.');
+		return false;
+	}
+	if($('input[name="UserID"]').val() === ""){
+		alert('User Id is required field.');
+		return false;
+	}
+	if($('input[name="upassword"]').val() === ""){
+		alert('Password is required field.');
+		return false;
+	}
+	if($('input[name="retypepassword"]').val() === ""){
+		alert('Please retype password.');
+		return false;
+	}
+	if($('#userType').val() === ""){
+		alert('User type is required field.');
+		return false;
+	}
+	if($('input[name="retypepassword"]').val() !== $('input[name="upassword"]').val()){
+		alert("Password in both field don't match.");
+		return false;
+	}
+}
+
+function validateForecast(newthis){
+	if($('#forecast-name').val() === ""){
+		alert('Forecast name is required.');
+		return false;
+	}
+	if($('#forecast-year').val() === ""){
+		alert('Forecast year is required.');
+		return false;
+	}
+	if($('#forecast-month').val() === ""){
+		alert('Forecast month is required.');
+		return false;
+	}
+	var check = true;
+	$('.quarter-row-common input').each(function(){
+		if($(this).val() !== "")
+			check = false;
+	});
+	if(check){
+		alert('Enter at least one month data.')
+		return false;
+	}
+}
+
+function validateActual(newthis){
+	var check = true;
+	$('.quarter-row-common input').each(function(){
+		if($(this).val() !== "")
+			check = false;
+	});
+	if(check){
+		alert('Enter at least one month data.')
+		return false;
+	}
+}
+
 function validateText(x){
   	var ed=x.value;
  var pattern = /^([a-zA-Z0-9\_\. ]{4,25})$/;

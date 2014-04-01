@@ -7,6 +7,7 @@
 <title>Add Actual</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, user-scalable=no">
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/Images/validate.js"></script>
 </head>
 <body>
 	<jsp:include page="AdminMenu.jsp"></jsp:include>
@@ -89,7 +90,7 @@
 					<tr>
 					<tr align="center">
 					<td colspan="3"><input class="sitewide-button" id="forecast-submit" type="submit"
-					value="Submit" /> <input class="sitewide-button"
+					value="Submit" onclick="return validateActual(this)"/> <input class="sitewide-button"
 					id="forecast-reset" type="reset" value="Reset" /></td>
 					</tr>
 				</table>

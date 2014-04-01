@@ -15,6 +15,7 @@
 <HEAD>
 <TITLE>Add New Account</TITLE>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
+<script LANGUAGE="Javascript" SRC="../Images/validate.js"></script>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 	function validate() {
@@ -152,7 +153,7 @@
 
 				<tr class=row_odd>
 					<TH colspan=1><INPUT <%if(userVOList.size() == 0){ %> disabled="disabled" <%} %> class="sitewide-button" TYPE="submit"
-						id="account" onClick="return validate(this)" value='Add'></TH>
+						id="account" onClick="return validateAccount(this)" value='Add'></TH>
 					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset"
 						value='Clear'></TH>
 				</TR>

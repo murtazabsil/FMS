@@ -12,9 +12,7 @@
 <HEAD>
 
 
-<script LANGUAGE="Javascript" SRC="Images/validate.js"></script>
-
-
+<script LANGUAGE="Javascript" SRC="<%=request.getContextPath() %>/Images/validate.js"></script>
 <LINK href="css/styles.css" type="text/css" rel="stylesheet">
 <title>Add New Lob</title>
 </HEAD>
@@ -112,7 +110,7 @@
 
 				<tr class=row_odd>
 					<TH colspan=1><INPUT <%if(userVOList.size() == 0){ %> disabled="disabled" <%} %> class="sitewide-button" TYPE="submit"
-						id="lob" onClick="return validate(this)" value='Add'></TH>
+						id="lob" onClick="return validateLob(this)" value='Add'></TH>
 					<TH colspan=2><INPUT class="sitewide-button" TYPE="reset"
 						value='Clear'></TH>
 				</TR>

@@ -35,13 +35,13 @@
 	%>
 	<jsp:forward page="AdminMenu.jsp" />
 	<%
+		}
 		} else {
 	%>
 	<jsp:forward page="Login.jsp">
 		<jsp:param name="ErrCode" value="1" />
 	</jsp:forward>
 	<%
-		}
 		}
 	%>
 </BODY>
